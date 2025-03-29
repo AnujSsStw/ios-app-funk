@@ -1,17 +1,60 @@
 
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
-import { Audio } from 'expo-av';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
-// Temporarily disable audio for testing
-const AUDIO_FILES = {
-  pig: null,
-  cow: null,
-  // Add more audio files here
-};
+const DEFAULT_ANIMALS = [
+  { id: 1, name: 'Pig', clue: "Where's the pig?" },
+  { id: 2, name: 'Cow', clue: "Can you find the cow?" },
+  { id: 3, name: 'Dog', clue: "Where's the dog?" },
+];
+
+export default function GameScreen() {
+  const [currentAnimal] = useState(DEFAULT_ANIMALS[0]);
+
+  return (
+    <ThemedView style={styles.container}>
+      <ThemedText style={styles.title}>Animal Game</ThemedText>
+      <ThemedText style={styles.clue}>{currentAnimal.clue}</ThemedText>
+      
+      <TouchableOpacity 
+        style={styles.animalButton}
+        onPress={() => router.push('/')}
+      >
+        <ThemedText style={styles.animalText}>{currentAnimal.name}</ThemedText>
+      </TouchableOpacity>
+    </ThemedView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  clue: {
+    fontSize: 18,
+    marginBottom: 30,
+  },
+  animalButton: {
+    backgroundColor: '#4CAF50',
+    padding: 20,
+    borderRadius: 10,
+  },
+  animalText: {
+    color: 'white',
+    fontSize: 20,
+  },
+});
 
 const DEFAULT_ANIMALS = [
   { id: 1, name: 'pig', image: require('../../assets/images/placeholder.png'), clue: "Where's the pig?" },
