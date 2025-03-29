@@ -29,9 +29,9 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack initialRouteName="screens/GameScreen">
+      <Stack>
+        <Stack.Screen name="screens/GameScreen" options={{ headerShown: false }} />
         <Stack.Screen name="screens/HomeScreen" options={{ headerShown: false }} />
-        <Stack.Screen name="screens/GameScreen" options={{ title: 'Animal Learning Game' }} />
         <Stack.Screen name="screens/CustomGameScreen" options={{ title: 'Create Game' }} />
         <Stack.Screen name="+not-found" />
       </Stack>
