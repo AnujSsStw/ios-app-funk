@@ -14,9 +14,18 @@ const AUDIO_FILES = {
 };
 
 const DEFAULT_ANIMALS = [
-  { id: 1, name: 'pig', image: require('@/assets/images/animals/pig.png'), audio: AUDIO_FILES.pig },
-  { id: 2, name: 'cow', image: require('@/assets/images/animals/cow.png'), audio: AUDIO_FILES.cow },
-  // Add more animals here
+  { id: 1, name: 'pig', image: require('../../assets/images/placeholder.png'), clue: "Where's the pig?" },
+  { id: 2, name: 'cow', image: require('../../assets/images/placeholder.png'), clue: "Can you find the cow?" },
+  { id: 3, name: 'dog', image: require('../../assets/images/placeholder.png'), clue: "Where's the dog?" },
+  { id: 4, name: 'cat', image: require('../../assets/images/placeholder.png'), clue: "Can you spot the cat?" },
+  { id: 5, name: 'bird', image: require('../../assets/images/placeholder.png'), clue: "Where's the bird?" },
+  { id: 6, name: 'fish', image: require('../../assets/images/placeholder.png'), clue: "Can you find the fish?" },
+  { id: 7, name: 'duck', image: require('../../assets/images/placeholder.png'), clue: "Where's the duck?" },
+  { id: 8, name: 'sheep', image: require('../../assets/images/placeholder.png'), clue: "Can you spot the sheep?" },
+  { id: 9, name: 'horse', image: require('../../assets/images/placeholder.png'), clue: "Where's the horse?" },
+  { id: 10, name: 'rabbit', image: require('../../assets/images/placeholder.png'), clue: "Can you find the rabbit?" },
+  { id: 11, name: 'mouse', image: require('../../assets/images/placeholder.png'), clue: "Where's the mouse?" },
+  { id: 12, name: 'chicken', image: require('../../assets/images/placeholder.png'), clue: "Can you spot the chicken?" },
 ];
 
 export default function GameScreen() {
