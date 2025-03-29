@@ -6,9 +6,10 @@ import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+// Temporarily disable audio for testing
 const AUDIO_FILES = {
-  pig: require('@/assets/audio/pig.mp3'),
-  cow: require('@/assets/audio/cow.mp3'),
+  pig: null,
+  cow: null,
   // Add more audio files here
 };
 
