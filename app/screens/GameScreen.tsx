@@ -6,9 +6,15 @@ import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+const AUDIO_FILES = {
+  pig: require('@/assets/audio/pig.mp3'),
+  cow: require('@/assets/audio/cow.mp3'),
+  // Add more audio files here
+};
+
 const DEFAULT_ANIMALS = [
-  { id: 1, name: 'pig', image: require('@/assets/images/animals/pig.png') },
-  { id: 2, name: 'cow', image: require('@/assets/images/animals/cow.png') },
+  { id: 1, name: 'pig', image: require('@/assets/images/animals/pig.png'), audio: AUDIO_FILES.pig },
+  { id: 2, name: 'cow', image: require('@/assets/images/animals/cow.png'), audio: AUDIO_FILES.cow },
   // Add more animals here
 ];
 
@@ -33,7 +39,7 @@ export default function GameScreen() {
     if (!currentAnimal) return;
     const sound = new Audio.Sound();
     try {
-      await sound.loadAsync(require(`@/assets/audio/${currentAnimal.name}.mp3`));
+      await sound.loadAsync(currentAnimal.audio);
       await sound.playAsync();
     } catch (error) {
       console.error(error);
