@@ -201,8 +201,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.8)',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
+    paddingBottom: height * 0.4, // Position text 40% from bottom
     zIndex: 1000,
   },
   winText: {
