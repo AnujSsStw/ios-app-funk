@@ -1,82 +1,79 @@
 
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Dimensions, View } from 'react-native';
+import { useAudio } from '@/hooks/useAudio';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useAudio } from '../../hooks/useAudio';
 
 const animals = [
-  { name: 'Lion', image: '🦁' },
-  { name: 'Elephant', image: '🐘' },
-  { name: 'Giraffe', image: '🦒' },
-  { name: 'Monkey', image: '🐒' },
-  { name: 'Tiger', image: '🐯' },
-  { name: 'Penguin', image: '🐧' },
-  { name: 'Bear', image: '🐻' },
-  { name: 'Rabbit', image: '🐰' },
-  { name: 'Koala', image: '🐨' },
-  { name: 'Fox', image: '🦊' },
-  { name: 'Panda', image: '🐼' },
-  { name: 'Pig', image: '🐷' },
+  { name: 'Sunflower', image: '🌻' },
+  { name: 'Mountain', image: '⛰️' },
+  { name: 'Forest', image: '🌲' },
+  { name: 'Cat', image: '🐱' },
+  { name: 'Road', image: '🛣️' },
+  { name: 'Ice Cream', image: '🍦' },
+  { name: 'Snow Peak', image: '🏔️' },
+  { name: 'Strawberry', image: '🍓' },
+  { name: 'Cloud', image: '☁️' },
+  { name: 'Tree', image: '🌳' },
+  { name: 'Lake', image: '🌊' },
+  { name: 'Grass', image: '🌿' }
 ];
 
-const windowWidth = Dimensions.get('window').width;
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const itemsPerRow = 3;
+const spacing = 2;
+const availableWidth = screenWidth;
+const itemSize = (availableWidth - (spacing * (itemsPerRow + 1))) / itemsPerRow;
 
 export default function GameScreen() {
-  const [currentAnimal, setCurrentAnimal] = useState<number>(-1);
-  const [shuffledAnimals, setShuffledAnimals] = useState([...animals]);
-  const [feedback, setFeedback] = useState<{index: number, correct: boolean} | null>(null);
-  const { playCorrectSound, playInstructions } = useAudio();
+  const [currentAnimal, setCurrentAnimal] = useState(0);
+  const [selectedAnimal, setSelectedAnimal] = useState(null);
+  const { playCorrectSound, speakAnimalName } = useAudio();
 
   useEffect(() => {
-    const startGame = async () => {
-      const shuffled = [...animals].sort(() => Math.random() - 0.5);
-      setShuffledAnimals(shuffled);
-      setCurrentAnimal(0);
-      await playInstructions(shuffled[0].name);
-    };
-    startGame();
+    if (currentAnimal === 0) {
+      const timeout = setTimeout(() => {
+        speakAnimalName(animals[currentAnimal].name);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
   }, []);
 
-  const handleAnimalPress = async (selectedIndex: number) => {
-    const isCorrect = selectedIndex === currentAnimal;
-    setFeedback({ index: selectedIndex, correct: isCorrect });
-
-    if (isCorrect) {
+  const handleAnimalPress = async (index) => {
+    setSelectedAnimal(index);
+    if (index === currentAnimal) {
       await playCorrectSound();
-      setTimeout(async () => {
-        setFeedback(null);
-        const nextAnimal = (currentAnimal + 1) % animals.length;
-        setCurrentAnimal(nextAnimal);
-        await playInstructions(shuffledAnimals[nextAnimal].name);
+      setSelectedAnimal(null);
+      const nextAnimal = Math.floor(Math.random() * animals.length);
+      setCurrentAnimal(nextAnimal);
+      setTimeout(() => {
+        speakAnimalName(animals[nextAnimal].name);
       }, 1000);
     } else {
-      setTimeout(async () => {
-        setFeedback(null);
-        await playInstructions(shuffledAnimals[currentAnimal].name);
+      setTimeout(() => {
+        setSelectedAnimal(null);
+        speakAnimalName(animals[currentAnimal].name);
       }, 1000);
     }
   };
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedView style={styles.grid}>
-        {shuffledAnimals.map((animal, index) => (
+      <View style={styles.grid}>
+        {animals.map((animal, index) => (
           <TouchableOpacity
             key={index}
-            style={styles.animalButton}
-            onPress={() => handleAnimalPress(index)}>
+            style={[
+              styles.animalButton,
+              selectedAnimal === index && (index === currentAnimal ? styles.correctSelection : styles.wrongSelection)
+            ]}
+            onPress={() => handleAnimalPress(index)}
+          >
             <ThemedText style={styles.animalEmoji}>{animal.image}</ThemedText>
-            {feedback && feedback.index === index && (
-              <View style={[styles.feedbackOverlay, { backgroundColor: feedback.correct ? 'rgba(0, 255, 0, 0.3)' : 'rgba(255, 0, 0, 0.3)' }]}>
-                <ThemedText style={styles.feedbackText}>
-                  {feedback.correct ? '✓' : '✗'}
-                </ThemedText>
-              </View>
-            )}
           </TouchableOpacity>
         ))}
-      </ThemedView>
+      </View>
     </ThemedView>
   );
 }
@@ -84,41 +81,40 @@ export default function GameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
   },
   grid: {
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    width: windowWidth,
-    padding: 10,
+    alignItems: 'center',
+    padding: spacing,
   },
   animalButton: {
-    width: windowWidth / 3 - 20,
-    height: windowWidth / 3 - 20,
-    margin: 10,
+    width: itemSize,
+    height: itemSize,
+    margin: spacing,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#ffffff',
     borderRadius: 10,
-    position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   animalEmoji: {
-    fontSize: 50,
+    fontSize: itemSize * 0.5,
   },
-  feedbackOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
+  correctSelection: {
+    backgroundColor: '#4CAF50',
   },
-  feedbackText: {
-    fontSize: 40,
-    color: '#fff',
-  },
+  wrongSelection: {
+    backgroundColor: '#FF5252',
+  }
 });
