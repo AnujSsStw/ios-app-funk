@@ -183,14 +183,13 @@ const styles = StyleSheet.create({
   },
   wrongX: {
     position: 'absolute',
-    fontSize: itemWidth * 0.4,
+    fontSize: itemWidth * 0.6,
     color: 'red',
-    top: '50%',
-    left: '50%',
-    transform: [
-      { translateX: -(itemWidth * 0.2) },
-      { translateY: -(itemWidth * 0.2) }
-    ],
+    width: '100%',
+    height: '100%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    lineHeight: itemWidth,
     zIndex: 2,
   },
   correctAnswer: {
@@ -198,14 +197,13 @@ const styles = StyleSheet.create({
   },
   correctCheck: {
     position: 'absolute',
-    fontSize: itemWidth * 0.4,
+    fontSize: itemWidth * 0.6,
     color: 'green',
-    top: '50%',
-    left: '50%',
-    transform: [
-      { translateX: -(itemWidth * 0.2) },
-      { translateY: -(itemWidth * 0.2) }
-    ],
+    width: '100%',
+    height: '100%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    lineHeight: itemWidth,
     zIndex: 2,
   },
   winScreen: {
