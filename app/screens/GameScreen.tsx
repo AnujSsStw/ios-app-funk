@@ -19,11 +19,11 @@ const animals = [
   { name: 'Grass', image: '🌿' }
 ];
 
-const { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const itemsPerRow = 3;
-//const spacing = 2; // Removed fixed spacing
-//const availableWidth = screenWidth; // Removed fixed width calculation
-//const itemSize = (availableWidth - (spacing * (itemsPerRow + 1))) / itemsPerRow; // Removed fixed item size calculation
+const spacing = 2;
+const availableWidth = screenWidth;
+const itemSize = (availableWidth - (spacing * (itemsPerRow + 1))) / itemsPerRow;
 
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
@@ -86,20 +86,29 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around', // Distribute items evenly
-    alignItems: 'center',
-  },
-  animalButton: {
-    flex: 1/itemsPerRow - 0.02, // Adjust this for spacing
-    aspectRatio: 1,
-    margin: 2,
-    borderRadius: 8,
-    backgroundColor: '#f0f0f0',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: spacing,
+  },
+  animalButton: {
+    width: itemSize,
+    height: itemSize,
+    margin: spacing,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   animalEmoji: {
-    flex: 1, // Allow emoji to scale to fill the button
+    fontSize: itemSize * 0.5,
   },
   correctSelection: {
     backgroundColor: '#4CAF50',
