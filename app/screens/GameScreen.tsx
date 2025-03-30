@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
-    width: '100%': 'bold',
-    color: '#fff',
+    width: '100%',
   },
 });
