@@ -18,55 +18,35 @@ const animals = [
 
 const { width: screenWidth } = Dimensions.get('window');
 const itemsPerRow = 3;
-const spacing = 4;
-const availableWidth = screenWidth - (spacing * 2); // Account for container padding
+const spacing = 10;
+const availableWidth = screenWidth - (spacing * 2);
 const itemSize = (availableWidth - (spacing * (itemsPerRow - 1))) / itemsPerRow;
 
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
-  const [selectedAnimal, setSelectedAnimal] = useState(null);
   const { playCorrectSound, playInstructions } = useAudio();
 
   useEffect(() => {
-    if (currentAnimal === 0) {
-      const timeout = setTimeout(() => {
-        playInstructions(animals[currentAnimal].name);
-      }, 500);
-      return () => clearTimeout(timeout);
-    }
-  }, []);
+    playInstructions(`Where is the ${animals[currentAnimal].name}?`);
+  }, [currentAnimal]);
 
-  const handleAnimalPress = async (index) => {
-    setSelectedAnimal(index);
+  const handlePress = (index: number) => {
     if (index === currentAnimal) {
-      await playCorrectSound();
-      setSelectedAnimal(null);
-      const nextAnimal = Math.floor(Math.random() * animals.length);
-      setCurrentAnimal(nextAnimal);
-      setTimeout(() => {
-        playInstructions(animals[nextAnimal].name);
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        setSelectedAnimal(null);
-        playInstructions(animals[currentAnimal].name);
-      }, 1000);
+      playCorrectSound();
+      setCurrentAnimal(Math.floor(Math.random() * animals.length));
     }
   };
 
   return (
     <ThemedView style={styles.container}>
+      <ThemedText style={styles.title}>Find the {animals[currentAnimal].name}</ThemedText>
       <View style={styles.grid}>
         {animals.map((animal, index) => (
           <TouchableOpacity
             key={index}
-            style={[
-              styles.animalButton,
-              selectedAnimal === index && (index === currentAnimal ? styles.correctSelection : styles.wrongSelection)
-            ]}
-            onPress={() => handleAnimalPress(index)}
-          >
-            <ThemedText style={styles.animalEmoji}>{animal.image}</ThemedText>
+            style={[styles.animalButton]}
+            onPress={() => handlePress(index)}>
+            <ThemedText style={styles.animalText}>{animal.image}</ThemedText>
           </TouchableOpacity>
         ))}
       </View>
@@ -77,40 +57,28 @@ export default function GameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
     padding: spacing,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+    marginVertical: 20,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around', // Corrected
-    alignItems: 'center', // Corrected
-
+    justifyContent: 'space-between',
+    gap: spacing,
   },
   animalButton: {
     width: itemSize,
     height: itemSize,
-    margin: spacing,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
-  animalEmoji: {
-    fontSize: itemSize * 0.5,
+  animalText: {
+    fontSize: 32,
   },
-  correctSelection: {
-    backgroundColor: '#4CAF50',
-  },
-  wrongSelection: {
-    backgroundColor: '#FF5252',
-  }
 });
