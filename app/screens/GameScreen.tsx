@@ -13,10 +13,7 @@ const animals = [
   { name: 'Ice Cream', image: '🍦' },
   { name: 'Snow Peak', image: '🏔️' },
   { name: 'Strawberry', image: '🍓' },
-  { name: 'Cloud', image: '☁️' },
-  { name: 'Tree', image: '🌳' },
-  { name: 'Lake', image: '🌊' },
-  { name: 'Grass', image: '🌿' }
+  { name: 'Cloud', image: '☁️' }
 ];
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
