@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Dimensions, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useAudio } from '@/hooks/useAudio';
+import { useAudio } from '../../hooks/useAudio';
 
 const animals = [
   { name: 'Lion', image: '🦁' },
@@ -26,14 +26,16 @@ export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState<number>(-1);
   const [shuffledAnimals, setShuffledAnimals] = useState([...animals]);
   const [feedback, setFeedback] = useState<{index: number, correct: boolean} | null>(null);
-  const { playCorrectSound } = useAudio();
+  const { playCorrectSound, playInstructions } = useAudio();
 
   useEffect(() => {
-    // Shuffle animals and set initial target
-    const shuffled = [...animals].sort(() => Math.random() - 0.5);
-    setShuffledAnimals(shuffled);
-    setCurrentAnimal(0);
-    // TODO: Play audio "Where is the [shuffled[0].name]?"
+    const startGame = async () => {
+      const shuffled = [...animals].sort(() => Math.random() - 0.5);
+      setShuffledAnimals(shuffled);
+      setCurrentAnimal(0);
+      await playInstructions(shuffled[0].name);
+    };
+    startGame();
   }, []);
 
   const handleAnimalPress = async (selectedIndex: number) => {
@@ -42,16 +44,16 @@ export default function GameScreen() {
 
     if (isCorrect) {
       await playCorrectSound();
-      setTimeout(() => {
+      setTimeout(async () => {
         setFeedback(null);
         const nextAnimal = (currentAnimal + 1) % animals.length;
         setCurrentAnimal(nextAnimal);
-        // TODO: Play audio "Where is the [shuffledAnimals[nextAnimal].name]?"
+        await playInstructions(shuffledAnimals[nextAnimal].name);
       }, 1000);
     } else {
-      // TODO: Play audio "Where is the [shuffledAnimals[currentAnimal].name]?" again
-      setTimeout(() => {
+      setTimeout(async () => {
         setFeedback(null);
+        await playInstructions(shuffledAnimals[currentAnimal].name);
       }, 1000);
     }
   };
@@ -66,7 +68,7 @@ export default function GameScreen() {
             onPress={() => handleAnimalPress(index)}>
             <ThemedText style={styles.animalEmoji}>{animal.image}</ThemedText>
             {feedback && feedback.index === index && (
-              <View style={styles.feedbackOverlay}>
+              <View style={[styles.feedbackOverlay, { backgroundColor: feedback.correct ? 'rgba(0, 255, 0, 0.3)' : 'rgba(255, 0, 0, 0.3)' }]}>
                 <ThemedText style={styles.feedbackText}>
                   {feedback.correct ? '✓' : '✗'}
                 </ThemedText>
@@ -82,18 +84,24 @@ export default function GameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   grid: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'center',
+    width: windowWidth,
+    padding: 10,
   },
   animalButton: {
-    width: windowWidth / 3,
-    height: windowWidth / 3,
+    width: windowWidth / 3 - 20,
+    height: windowWidth / 3 - 20,
+    margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
+    borderRadius: 10,
     position: 'relative',
   },
   animalEmoji: {
@@ -107,10 +115,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 10,
   },
   feedbackText: {
-    fontSize: 60,
-    color: '#4CAF50', // Green for correct
+    fontSize: 40,
+    color: '#fff',
   },
 });
