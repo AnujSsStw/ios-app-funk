@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, Dimensions, View } from 'react-native';
 import { useAudio } from '@/hooks/useAudio';
@@ -29,12 +28,12 @@ const itemSize = (availableWidth - (spacing * (itemsPerRow + 1))) / itemsPerRow;
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
-  const { playCorrectSound, speakAnimalName } = useAudio();
+  const { playCorrectSound, playInstructions } = useAudio();
 
   useEffect(() => {
     if (currentAnimal === 0) {
       const timeout = setTimeout(() => {
-        speakAnimalName(animals[currentAnimal].name);
+        playInstructions(animals[currentAnimal].name);
       }, 500);
       return () => clearTimeout(timeout);
     }
@@ -48,12 +47,12 @@ export default function GameScreen() {
       const nextAnimal = Math.floor(Math.random() * animals.length);
       setCurrentAnimal(nextAnimal);
       setTimeout(() => {
-        speakAnimalName(animals[nextAnimal].name);
+        playInstructions(animals[nextAnimal].name);
       }, 1000);
     } else {
       setTimeout(() => {
         setSelectedAnimal(null);
-        speakAnimalName(animals[currentAnimal].name);
+        playInstructions(animals[currentAnimal].name);
       }, 1000);
     }
   };
