@@ -150,10 +150,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing,
-    overflow: 'hidden', // Added for better image containment
+    padding: 10,
   },
   animalText: {
-    fontSize: 40,
+    fontSize: itemWidth * 0.5,
+    lineHeight: itemWidth * 0.6,
+    textAlign: 'center',
   },
   image: {
     width: '100%',
