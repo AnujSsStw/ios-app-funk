@@ -13,11 +13,9 @@ const animals = [
 
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
-  const [score, setScore] = useState(0);
 
   const handleAnimalPress = (selectedAnimalIndex) => {
     if (selectedAnimalIndex === currentAnimal) {
-      setScore(score + 1);
       setCurrentAnimal(Math.floor(Math.random() * animals.length));
     }
   };
@@ -25,7 +23,6 @@ export default function GameScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText style={styles.title}>Animal Learning Game</ThemedText>
-      <ThemedText style={styles.score}>Score: {score}</ThemedText>
       <ThemedText style={styles.question}>Find the {animals[currentAnimal].name}!</ThemedText>
       <ThemedView style={styles.grid}>
         {animals.map((animal, index) => (
@@ -53,10 +50,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  score: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
+  
   question: {
     fontSize: 18,
     marginBottom: 30,
