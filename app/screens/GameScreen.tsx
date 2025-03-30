@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { router } from 'expo-router';
 import { StyleSheet, View, TouchableOpacity, Dimensions, Animated } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -80,13 +81,13 @@ export default function GameScreen() {
   };
 
   const handleWinScreenTap = () => {
-    router.replace('/');
+    router.push('/');
   };
 
   useEffect(() => {
     if (showWinScreen) {
       const timer = setTimeout(() => {
-        router.replace('/');
+        router.push('/');
       }, 5000);
 
       return () => clearTimeout(timer);
@@ -173,8 +174,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.8)',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
+    paddingBottom: 200,
     zIndex: 1000,
   },
   winText: {
