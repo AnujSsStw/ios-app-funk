@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, Animated } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useAudio } from '@/hooks/useAudio';
@@ -25,7 +25,9 @@ export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
   const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
   const [correctAnswers, setCorrectAnswers] = useState<number[]>([]); // Track correct answers
+  const [showWinScreen, setShowWinScreen] = useState(false); // State for win screen
   const { playCorrectSound, playInstructions } = useAudio();
+  const fadeAnim = new Animated.Value(1); // For fade animation
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -34,22 +36,33 @@ export default function GameScreen() {
     return () => clearTimeout(timeout);
   }, [currentAnimal]);
 
+  useEffect(() => {
+    if (correctAnswers.length === animals.length) {
+      setShowWinScreen(true);
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 3000,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [correctAnswers]);
+
   const handlePress = (index: number) => {
     if (correctAnswers.includes(index)) {
       return; // Ignore taps on already correct answers
     }
-    
+
     if (index === currentAnimal) {
       playCorrectSound();
       setWrongAnswer(null);
       setCorrectAnswers([...correctAnswers, index]);
-      
+
       // Find next available animal that hasn't been correctly answered
       let nextAnimal;
       do {
         nextAnimal = Math.floor(Math.random() * animals.length);
       } while (correctAnswers.includes(nextAnimal) && correctAnswers.length < animals.length);
-      
+
       setCurrentAnimal(nextAnimal);
     } else {
       setWrongAnswer(index);
@@ -57,6 +70,17 @@ export default function GameScreen() {
         playInstructions(`Find the ${animals[currentAnimal].name}`);
       }, 500);
     }
+  };
+
+  const handleWinScreenTap = () => {
+    setShowWinScreen(false);
+    setCorrectAnswers([]); // Reset game
+    setCurrentAnimal(0); // Reset to first animal
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 0,
+      useNativeDriver: true,
+    }).start();
   };
 
   return (
@@ -78,6 +102,13 @@ export default function GameScreen() {
           </TouchableOpacity>
         ))}
       </View>
+      {showWinScreen && (
+        <Animated.View style={[styles.winScreen, { opacity: fadeAnim }]}>
+          <TouchableOpacity onPress={handleWinScreenTap} style={{ flex:1 }}>
+            <ThemedText style={styles.winText}>You Win!</ThemedText>
+          </TouchableOpacity>
+        </Animated.View>
+      )}
     </ThemedView>
   );
 }
@@ -124,5 +155,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     fontSize: 30,
     color: 'green',
+  },
+  winScreen: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  },
+  winText: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 });
