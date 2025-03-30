@@ -80,15 +80,18 @@ export default function GameScreen() {
   };
 
   const handleWinScreenTap = () => {
-    setShowWinScreen(false);
-    setCorrectAnswers([]); // Reset game
-    setCurrentAnimal(0); // Reset to first animal
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 0,
-      useNativeDriver: true,
-    }).start();
+    router.replace('/');
   };
+
+  useEffect(() => {
+    if (showWinScreen) {
+      const timer = setTimeout(() => {
+        router.replace('/');
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showWinScreen]);
 
   return (
     <ThemedView style={styles.container}>
@@ -177,6 +180,9 @@ const styles = StyleSheet.create({
   winText: {
     fontSize: 48,
     fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    width: '100%': 'bold',
     color: '#fff',
   },
 });
