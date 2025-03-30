@@ -183,16 +183,30 @@ const styles = StyleSheet.create({
   },
   wrongX: {
     position: 'absolute',
-    fontSize: 30,
+    fontSize: itemWidth * 0.4,
+    color: 'red',
+    top: '50%',
+    left: '50%',
+    transform: [
+      { translateX: -(itemWidth * 0.2) },
+      { translateY: -(itemWidth * 0.2) }
+    ],
+    zIndex: 2,
   },
   correctAnswer: {
     backgroundColor: '#d4edda', // Light green
   },
   correctCheck: {
     position: 'absolute',
-    fontSize: itemWidth * 0.3,
+    fontSize: itemWidth * 0.4,
     color: 'green',
-    textAlign: 'center',
+    top: '50%',
+    left: '50%',
+    transform: [
+      { translateX: -(itemWidth * 0.2) },
+      { translateY: -(itemWidth * 0.2) }
+    ],
+    zIndex: 2,
   },
   winScreen: {
     position: 'absolute',
