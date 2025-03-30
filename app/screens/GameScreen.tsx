@@ -104,7 +104,7 @@ export default function GameScreen() {
     if (showWinScreen) {
       const timer = setTimeout(() => {
         router.push('/');
-      }, 5000);
+      }, 2000);
 
       return () => clearTimeout(timer);
     }
