@@ -10,5 +10,12 @@ export const useAudio = () => {
     await sound.playAsync();
   }, []);
 
-  return { playCorrectSound };
+  const playInstructions = useCallback(async (animalName: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(`Where is the ${animalName}?`);
+      window.speechSynthesis.speak(utterance);
+    }
+  }, []);
+
+  return { playCorrectSound, playInstructions };
 };
