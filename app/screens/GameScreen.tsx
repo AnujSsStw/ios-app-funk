@@ -14,8 +14,11 @@ const animals = [
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
 
-  const handleAnimalPress = (selectedAnimalIndex) => {
+  const { playCorrectSound } = useAudio();
+  
+  const handleAnimalPress = async (selectedAnimalIndex) => {
     if (selectedAnimalIndex === currentAnimal) {
+      await playCorrectSound();
       setCurrentAnimal(Math.floor(Math.random() * animals.length));
     }
   };
