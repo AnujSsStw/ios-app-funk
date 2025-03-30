@@ -5,7 +5,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useAudio } from '@/hooks/useAudio';
 
-const animals = [
+const initialAnimals = [
   { name: 'Sunflower', image: '🌻' },
   { name: 'Mountain', image: '⛰️' },
   { name: 'Forest', image: '🌲' },
@@ -17,28 +17,43 @@ const animals = [
   { name: 'Cloud', image: '☁️' }
 ];
 
+const shuffleArray = (array: any[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+
 const { width, height } = Dimensions.get('window'); // Get both width and height
 const spacing = 10;
 const numColumns = 3;
 const itemWidth = (width - (spacing * (numColumns + 1))) / numColumns;
 
 export default function GameScreen() {
-  const [currentAnimal, setCurrentAnimal] = useState(0);
-  const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
-  const [correctAnswers, setCorrectAnswers] = useState<number[]>([]); // Track correct answers
-  const [showWinScreen, setShowWinScreen] = useState(false); // State for win screen
+  const [animals, setAnimals] = useState(shuffleArray(initialAnimals));
+  const [matches, setMatches] = useState<boolean[]>(Array(initialAnimals.length).fill(false));
+  const [targetAnimal, setTargetAnimal] = useState<number>(0);
+  const [showWinScreen, setShowWinScreen] = useState(false);
   const { playCorrectSound, playInstructions } = useAudio();
   const fadeAnim = new Animated.Value(1); // For fade animation
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      playInstructions(`Find the ${animals[currentAnimal].name}`);
-    }, 500);
-    return () => clearTimeout(timeout);
-  }, [currentAnimal]);
+    setAnimals(shuffleArray(initialAnimals));
+    setMatches(Array(initialAnimals.length).fill(false));
+    setTargetAnimal(0);
+  }, []);
 
   useEffect(() => {
-    if (correctAnswers.length === animals.length) {
+    const timeout = setTimeout(() => {
+      playInstructions(`Find the ${animals[targetAnimal].name}`);
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [targetAnimal]);
+
+  useEffect(() => {
+    if (matches.every(match => match)) {
       setShowWinScreen(true);
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -46,21 +61,21 @@ export default function GameScreen() {
         useNativeDriver: true,
       }).start();
     }
-  }, [correctAnswers]);
+  }, [matches]);
 
   const handlePress = (index: number) => {
-    if (correctAnswers.includes(index)) {
+    if (matches[index]) {
       return; // Ignore taps on already correct answers
     }
 
-    if (index === currentAnimal) {
+    if (index === targetAnimal) {
       playCorrectSound();
-      setWrongAnswer(null);
-      const newCorrectAnswers = [...correctAnswers, index];
-      setCorrectAnswers(newCorrectAnswers);
+      const newMatches = [...matches];
+      newMatches[index] = true;
+      setMatches(newMatches);
 
       // Check if game is complete
-      if (newCorrectAnswers.length === animals.length) {
+      if (newMatches.every(match => match)) {
         setShowWinScreen(true);
         return;
       }
@@ -69,14 +84,11 @@ export default function GameScreen() {
       let nextAnimal;
       do {
         nextAnimal = Math.floor(Math.random() * animals.length);
-      } while (newCorrectAnswers.includes(nextAnimal));
+      } while (newMatches[nextAnimal]);
 
-      setCurrentAnimal(nextAnimal);
+      setTargetAnimal(nextAnimal);
     } else {
-      setWrongAnswer(index);
-      setTimeout(() => {
-        playInstructions(`Find the ${animals[currentAnimal].name}`);
-      }, 500);
+      // Handle wrong answer (optional - add visual feedback)
     }
   };
 
@@ -96,18 +108,15 @@ export default function GameScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Find the {animals[currentAnimal].name}</ThemedText>
+      <ThemedText style={styles.title}>Find the {animals[targetAnimal].name}</ThemedText>
       <View style={styles.grid}>
         {animals.map((animal, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.animalButton, wrongAnswer === index && styles.wrongAnswer, correctAnswers.includes(index) && styles.correctAnswer]}
+            style={[styles.animalButton, matches[index] && styles.correctAnswer]}
             onPress={() => handlePress(index)}>
             <ThemedText style={styles.animalText}>{animal.image}</ThemedText>
-            {wrongAnswer === index && (
-              <ThemedText style={styles.wrongX}>❌</ThemedText>
-            )}
-            {correctAnswers.includes(index) && (
+            {matches[index] && (
               <ThemedText style={styles.correctCheck}>✅</ThemedText>
             )}
           </TouchableOpacity>
@@ -161,13 +170,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
-  },
-  wrongAnswer: {
-    backgroundColor: '#ffebee',
-  },
-  wrongX: {
-    position: 'absolute',
-    fontSize: 30,
   },
   correctAnswer: {
     backgroundColor: '#d4edda', // Light green
