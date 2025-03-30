@@ -18,9 +18,13 @@ export default function GameScreen() {
   const { playCorrectSound } = useAudio();
   
   const handleAnimalPress = async (selectedAnimalIndex) => {
-    if (selectedAnimalIndex === currentAnimal) {
-      await playCorrectSound();
-      setCurrentAnimal(Math.floor(Math.random() * animals.length));
+    try {
+      if (selectedAnimalIndex === currentAnimal) {
+        await playCorrectSound();
+        setCurrentAnimal(Math.floor(Math.random() * animals.length));
+      }
+    } catch (error) {
+      console.log('Error playing sound:', error);
     }
   };
 
@@ -33,7 +37,8 @@ export default function GameScreen() {
           <TouchableOpacity
             key={index}
             style={styles.animalButton}
-            onPress={() => handleAnimalPress(index)}>
+            onPress={() => handleAnimalPress(index)}
+            activeOpacity={0.7}>
             <ThemedText style={styles.animalEmoji}>{animal.image}</ThemedText>
           </TouchableOpacity>
         ))}
