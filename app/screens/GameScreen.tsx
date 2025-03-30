@@ -103,7 +103,7 @@ export default function GameScreen() {
   useEffect(() => {
     if (showWinScreen) {
       const timer = setTimeout(() => {
-        startNewGame();
+        router.push('/');
       }, 5000);
 
       return () => clearTimeout(timer);
