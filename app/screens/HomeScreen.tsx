@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
@@ -9,7 +10,7 @@ export default function HomeScreen() {
     <ThemedView style={styles.container}>
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => router.push('/game')}>
+        onPress={() => router.push('/screens/game')}>
         <ThemedText style={styles.buttonText}>Start Game</ThemedText>
       </TouchableOpacity>
     </ThemedView>
