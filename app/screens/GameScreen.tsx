@@ -1,51 +1,37 @@
-
 import React, { useState } from 'react';
-import { Audio } from 'expo-av';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useAudio } from '../../hooks/useAudio';
+//import { Audio } from 'expo-av'; //Removed as not used in edited code
 
 const animals = [
   { name: 'Lion', image: '🦁' },
   { name: 'Elephant', image: '🐘' },
   { name: 'Giraffe', image: '🦒' },
   { name: 'Monkey', image: '🐒' },
+  { name: 'Tiger', image: '🐯' },
+  { name: 'Penguin', image: '🐧' },
+  { name: 'Bear', image: '🐻' },
+  { name: 'Rabbit', image: '🐰' },
+  { name: 'Koala', image: '🐨' },
+  { name: 'Fox', image: '🦊' },
+  { name: 'Panda', image: '🐼' },
+  { name: 'Pig', image: '🐷' },
 ];
+
+const windowWidth = Dimensions.get('window').width;
 
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
-  
-  React.useEffect(() => {
-    async function initAudio() {
-      try {
-        await Audio.setAudioModeAsync({
-          playsInSilentModeIOS: true,
-        });
-      } catch (error) {
-        console.log('Error initializing audio:', error);
-      }
-    }
-    initAudio();
-  }, []);
 
-  const { playCorrectSound } = useAudio();
-  
-  const handleAnimalPress = async (selectedAnimalIndex) => {
-    try {
-      if (selectedAnimalIndex === currentAnimal) {
-        await playCorrectSound();
-        setCurrentAnimal(Math.floor(Math.random() * animals.length));
-      }
-    } catch (error) {
-      console.log('Error playing sound:', error);
+  const handleAnimalPress = (selectedAnimalIndex) => {
+    if (selectedAnimalIndex === currentAnimal) {
+      setCurrentAnimal(Math.floor(Math.random() * animals.length));
     }
   };
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Animal Learning Game</ThemedText>
-      <ThemedText style={styles.question}>Find the {animals[currentAnimal].name}!</ThemedText>
       <ThemedView style={styles.grid}>
         {animals.map((animal, index) => (
           <TouchableOpacity
@@ -64,36 +50,20 @@ export default function GameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  
-  question: {
-    fontSize: 18,
-    marginBottom: 30,
   },
   grid: {
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 10,
   },
   animalButton: {
-    width: 100,
-    height: 100,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 10,
+    width: windowWidth / 3,
+    height: windowWidth / 3,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 5,
+    backgroundColor: '#f0f0f0',
   },
   animalEmoji: {
-    fontSize: 40,
+    fontSize: 50,
   },
 });
