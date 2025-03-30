@@ -24,7 +24,6 @@ const itemsPerRow = 3;
 const spacing = 4;
 const availableWidth = screenWidth - (spacing * 2); // Account for container padding
 const itemSize = (availableWidth - (spacing * (itemsPerRow - 1))) / itemsPerRow;
-const itemSize = (availableWidth - (spacing * (itemsPerRow + 1))) / itemsPerRow;
 
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
