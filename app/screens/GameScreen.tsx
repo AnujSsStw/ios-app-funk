@@ -21,8 +21,9 @@ const animals = [
 
 const { width: screenWidth } = Dimensions.get('window');
 const itemsPerRow = 3;
-const spacing = 2;
-const availableWidth = screenWidth;
+const spacing = 4;
+const availableWidth = screenWidth - (spacing * 2); // Account for container padding
+const itemSize = (availableWidth - (spacing * (itemsPerRow - 1))) / itemsPerRow;
 const itemSize = (availableWidth - (spacing * (itemsPerRow + 1))) / itemsPerRow;
 
 export default function GameScreen() {
@@ -81,14 +82,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    padding: spacing,
   },
   grid: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: spacing,
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
   animalButton: {
     width: itemSize,
