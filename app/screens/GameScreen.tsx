@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, Dimensions, View } from 'react-native';
-import { useAudio } from '@/hooks/useAudio';
+import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useAudio } from '@/hooks/useAudio';
 
 const animals = [
   { name: 'Sunflower', image: '🌻' },
@@ -83,8 +83,9 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    justifyContent: 'space-around', // Corrected
+    alignItems: 'center', // Corrected
+
   },
   animalButton: {
     width: itemSize,
