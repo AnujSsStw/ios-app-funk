@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
-import { StyleSheet, View, TouchableOpacity, Dimensions, Animated } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, Animated, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useAudio } from '@/hooks/useAudio';
 
 const animals = [
-  { name: 'Sunflower', image: '🌻' },
-  { name: 'Mountain', image: '⛰️' },
-  { name: 'Forest', image: '🌲' },
-  { name: 'Cat', image: '🐱' },
-  { name: 'Road', image: '🛣️' },
-  { name: 'Ice Cream', image: '🍦' },
-  { name: 'Snow Peak', image: '🏔️' },
-  { name: 'Strawberry', image: '🍓' },
-  { name: 'Cloud', image: '☁️' }
+  { name: 'Sunflower', image: require('./assets/sunflower.jpg') }, //Example image path, replace with actual paths
+  { name: 'Mountain', image: require('./assets/mountain.jpg') },
+  { name: 'Forest', image: require('./assets/forest.jpg') },
+  { name: 'Cat', image: require('./assets/cat.jpg') },
+  { name: 'Road', image: require('./assets/road.jpg') },
+  { name: 'Ice Cream', image: require('./assets/ice-cream.jpg') },
+  { name: 'Snow Peak', image: require('./assets/snow-peak.jpg') },
+  { name: 'Strawberry', image: require('./assets/strawberry.jpg') },
+  { name: 'Cloud', image: require('./assets/cloud.jpg') }
 ];
 
 const { width } = Dimensions.get('window');
@@ -103,7 +103,7 @@ export default function GameScreen() {
             key={index}
             style={[styles.animalButton, wrongAnswer === index && styles.wrongAnswer, correctAnswers.includes(index) && styles.correctAnswer]}
             onPress={() => handlePress(index)}>
-            <ThemedText style={styles.animalText}>{animal.image}</ThemedText>
+            <Image source={animal.image} style={styles.image} />
             {wrongAnswer === index && (
               <ThemedText style={styles.wrongX}>❌</ThemedText>
             )}
@@ -148,9 +148,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing,
+    overflow: 'hidden', // Added for better image containment
   },
   animalText: {
     fontSize: 40,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
   },
   wrongAnswer: {
     backgroundColor: '#ffebee',
