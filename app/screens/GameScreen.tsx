@@ -174,8 +174,9 @@ const styles = StyleSheet.create({
   },
   correctCheck: {
     position: 'absolute',
-    fontSize: 30,
+    fontSize: itemWidth * 0.3,
     color: 'green',
+    textAlign: 'center',
   },
   winScreen: {
     position: 'absolute',
