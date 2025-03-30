@@ -24,6 +24,7 @@ const itemWidth = (width - (spacing * (numColumns + 1))) / numColumns;
 
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
+  const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
   const { playCorrectSound, playInstructions } = useAudio();
 
   useEffect(() => {
@@ -36,7 +37,13 @@ export default function GameScreen() {
   const handlePress = (index: number) => {
     if (index === currentAnimal) {
       playCorrectSound();
+      setWrongAnswer(null);
       setCurrentAnimal(Math.floor(Math.random() * animals.length));
+    } else {
+      setWrongAnswer(index);
+      setTimeout(() => {
+        playInstructions(`Find the ${animals[currentAnimal].name}`);
+      }, 500);
     }
   };
 
@@ -47,9 +54,12 @@ export default function GameScreen() {
         {animals.map((animal, index) => (
           <TouchableOpacity
             key={index}
-            style={styles.animalButton}
+            style={[styles.animalButton, wrongAnswer === index && styles.wrongAnswer]}
             onPress={() => handlePress(index)}>
             <ThemedText style={styles.animalText}>{animal.image}</ThemedText>
+            {wrongAnswer === index && (
+              <ThemedText style={styles.wrongX}>❌</ThemedText>
+            )}
           </TouchableOpacity>
         ))}
       </View>
@@ -84,5 +94,12 @@ const styles = StyleSheet.create({
   },
   animalText: {
     fontSize: 40,
+  },
+  wrongAnswer: {
+    backgroundColor: '#ffebee',
+  },
+  wrongX: {
+    position: 'absolute',
+    fontSize: 30,
   },
 });
