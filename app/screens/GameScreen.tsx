@@ -35,13 +35,22 @@ export default function GameScreen() {
   }, [currentAnimal]);
 
   const handlePress = (index: number) => {
+    if (correctAnswers.includes(index)) {
+      return; // Ignore taps on already correct answers
+    }
+    
     if (index === currentAnimal) {
-      if (!correctAnswers.includes(index)) {
-        playCorrectSound();
-      }
+      playCorrectSound();
       setWrongAnswer(null);
-      setCorrectAnswers([...correctAnswers, index]); // Add correct answer to the array
-      setCurrentAnimal(Math.floor(Math.random() * animals.length));
+      setCorrectAnswers([...correctAnswers, index]);
+      
+      // Find next available animal that hasn't been correctly answered
+      let nextAnimal;
+      do {
+        nextAnimal = Math.floor(Math.random() * animals.length);
+      } while (correctAnswers.includes(nextAnimal) && correctAnswers.length < animals.length);
+      
+      setCurrentAnimal(nextAnimal);
     } else {
       setWrongAnswer(index);
       setTimeout(() => {

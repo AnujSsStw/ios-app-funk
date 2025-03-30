@@ -9,8 +9,10 @@ export function useAudio() {
     try {
       const { sound } = await Audio.Sound.createAsync(require('../assets/audio/correct.mp3'));
       await sound.playAsync();
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for sound to finish
+      await sound.unloadAsync(); // Properly cleanup the sound
     } catch (error) {
-      console.error('Error playing sound:', error);
+      console.warn('Sound playback error:', error);
     }
   }, []);
 
