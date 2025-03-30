@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
@@ -16,18 +17,20 @@ const animals = [
   { name: 'Cloud', image: '☁️' }
 ];
 
-const { width: screenWidth } = Dimensions.get('window');
-const itemsPerRow = 3;
+const { width } = Dimensions.get('window');
 const spacing = 10;
-const availableWidth = screenWidth - (spacing * 2);
-const itemSize = (availableWidth - (spacing * (itemsPerRow - 1))) / itemsPerRow;
+const numColumns = 3;
+const itemWidth = (width - (spacing * (numColumns + 1))) / numColumns;
 
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
   const { playCorrectSound, playInstructions } = useAudio();
 
   useEffect(() => {
-    playInstructions(`Where is the ${animals[currentAnimal].name}?`);
+    const timeout = setTimeout(() => {
+      playInstructions(`Find the ${animals[currentAnimal].name}`);
+    }, 500);
+    return () => clearTimeout(timeout);
   }, [currentAnimal]);
 
   const handlePress = (index: number) => {
@@ -44,7 +47,7 @@ export default function GameScreen() {
         {animals.map((animal, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.animalButton]}
+            style={styles.animalButton}
             onPress={() => handlePress(index)}>
             <ThemedText style={styles.animalText}>{animal.image}</ThemedText>
           </TouchableOpacity>
@@ -68,17 +71,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: spacing,
+    padding: spacing,
   },
   animalButton: {
-    width: itemSize,
-    height: itemSize,
+    width: itemWidth,
+    height: itemWidth,
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: spacing,
   },
   animalText: {
-    fontSize: 32,
+    fontSize: 40,
   },
 });

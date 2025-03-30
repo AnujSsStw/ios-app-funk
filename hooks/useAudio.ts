@@ -1,4 +1,6 @@
+
 import { Audio } from 'expo-av';
+import * as Speech from 'expo-speech';
 import { useCallback } from 'react';
 import { Platform } from 'react-native';
 
@@ -16,6 +18,8 @@ export function useAudio() {
     if (Platform.OS === 'web') {
       const utterance = new SpeechSynthesisUtterance(text);
       window.speechSynthesis.speak(utterance);
+    } else {
+      await Speech.speak(text);
     }
   }, []);
 
