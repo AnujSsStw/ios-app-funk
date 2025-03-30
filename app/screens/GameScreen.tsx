@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useAudio } from '@/hooks/useAudio';
 
 const animals = [
   { name: 'Lion', image: '🦁' },
