@@ -17,7 +17,7 @@ const animals = [
   { name: 'Cloud', image: '☁️' }
 ];
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window'); // Get both width and height
 const spacing = 10;
 const numColumns = 3;
 const itemWidth = (width - (spacing * (numColumns + 1))) / numColumns;
@@ -127,6 +127,7 @@ export default function GameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: height * 0.1, // Add top padding
     padding: spacing,
   },
   title: {
@@ -137,7 +138,8 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    alignItems: 'center', // Added for vertical centering
     padding: spacing,
   },
   animalButton: {
