@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
+import { Audio } from 'expo-av';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useAudio } from '@/hooks/useAudio';
+import { useAudio } from '../../hooks/useAudio';
 
 const animals = [
   { name: 'Lion', image: '🦁' },
@@ -14,6 +15,19 @@ const animals = [
 
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
+  
+  React.useEffect(() => {
+    async function initAudio() {
+      try {
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+        });
+      } catch (error) {
+        console.log('Error initializing audio:', error);
+      }
+    }
+    initAudio();
+  }, []);
 
   const { playCorrectSound } = useAudio();
   
