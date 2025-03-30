@@ -203,7 +203,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.8)',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: height * 0.3,
     zIndex: 1000,
   },
   winText: {
@@ -212,5 +211,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     width: '100%',
+    paddingVertical: 20,
+  },
+  checkmark: {
+    position: 'absolute',
+    fontSize: itemWidth * 0.4,
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -(itemWidth * 0.25) }, { translateY: -(itemWidth * 0.25) }],
+    textAlign: 'center',
   },
 });
