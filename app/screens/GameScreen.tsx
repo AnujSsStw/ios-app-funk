@@ -55,13 +55,20 @@ export default function GameScreen() {
     if (index === currentAnimal) {
       playCorrectSound();
       setWrongAnswer(null);
-      setCorrectAnswers([...correctAnswers, index]);
+      const newCorrectAnswers = [...correctAnswers, index];
+      setCorrectAnswers(newCorrectAnswers);
+
+      // Check if game is complete
+      if (newCorrectAnswers.length === animals.length) {
+        setShowWinScreen(true);
+        return;
+      }
 
       // Find next available animal that hasn't been correctly answered
       let nextAnimal;
       do {
         nextAnimal = Math.floor(Math.random() * animals.length);
-      } while (correctAnswers.includes(nextAnimal) && correctAnswers.length < animals.length);
+      } while (newCorrectAnswers.includes(nextAnimal));
 
       setCurrentAnimal(nextAnimal);
     } else {
