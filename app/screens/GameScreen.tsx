@@ -36,7 +36,9 @@ export default function GameScreen() {
 
   const handlePress = (index: number) => {
     if (index === currentAnimal) {
-      playCorrectSound();
+      if (!correctAnswers.includes(index)) {
+        playCorrectSound();
+      }
       setWrongAnswer(null);
       setCorrectAnswers([...correctAnswers, index]); // Add correct answer to the array
       setCurrentAnimal(Math.floor(Math.random() * animals.length));
