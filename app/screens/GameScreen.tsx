@@ -13,10 +13,13 @@ const animals = [
   { name: 'Ice Cream', image: '🍦' },
   { name: 'Snow Peak', image: '🏔️' },
   { name: 'Strawberry', image: '🍓' },
-  { name: 'Cloud', image: '☁️' }
+  { name: 'Cloud', image: '☁️' },
+  { name: 'Star', image: '⭐' },
+  { name: 'Moon', image: '🌙' },
+  { name: 'Sun', image: '☀️' }
 ];
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 const itemsPerRow = 3;
 const spacing = 2;
 const availableWidth = screenWidth;
