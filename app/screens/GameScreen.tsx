@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.8)',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: 200,
+    paddingBottom: height * 0.15, // Adjust based on screen height
     zIndex: 1000,
   },
   winText: {
