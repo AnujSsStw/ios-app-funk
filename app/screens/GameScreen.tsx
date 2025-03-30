@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     fontSize: itemWidth * 0.4,
     top: '50%',
     left: '50%',
-    transform: [{ translateX: -(itemWidth * 0.2) }, { translateY: -(itemWidth * 0.2) }],
+    transform: [{ translateX: -15 }, { translateY: -15 }],
   },
   correctAnswer: {
     backgroundColor: '#d4edda', // Light green
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     color: 'green',
     top: '50%',
     left: '50%',
-    transform: [{ translateX: -(itemWidth * 0.2) }, { translateY: -(itemWidth * 0.2) }],
+    transform: [{ translateX: -15 }, { translateY: -15 }],
   },
   winScreen: {
     position: 'absolute',
