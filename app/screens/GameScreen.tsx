@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
@@ -25,6 +24,7 @@ const itemWidth = (width - (spacing * (numColumns + 1))) / numColumns;
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
   const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
+  const [correctAnswers, setCorrectAnswers] = useState<number[]>([]); // Track correct answers
   const { playCorrectSound, playInstructions } = useAudio();
 
   useEffect(() => {
@@ -38,6 +38,7 @@ export default function GameScreen() {
     if (index === currentAnimal) {
       playCorrectSound();
       setWrongAnswer(null);
+      setCorrectAnswers([...correctAnswers, index]); // Add correct answer to the array
       setCurrentAnimal(Math.floor(Math.random() * animals.length));
     } else {
       setWrongAnswer(index);
@@ -54,11 +55,14 @@ export default function GameScreen() {
         {animals.map((animal, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.animalButton, wrongAnswer === index && styles.wrongAnswer]}
+            style={[styles.animalButton, wrongAnswer === index && styles.wrongAnswer, correctAnswers.includes(index) && styles.correctAnswer]}
             onPress={() => handlePress(index)}>
             <ThemedText style={styles.animalText}>{animal.image}</ThemedText>
             {wrongAnswer === index && (
               <ThemedText style={styles.wrongX}>❌</ThemedText>
+            )}
+            {correctAnswers.includes(index) && (
+              <ThemedText style={styles.correctCheck}>✅</ThemedText>
             )}
           </TouchableOpacity>
         ))}
@@ -101,5 +105,13 @@ const styles = StyleSheet.create({
   wrongX: {
     position: 'absolute',
     fontSize: 30,
+  },
+  correctAnswer: {
+    backgroundColor: '#d4edda', // Light green
+  },
+  correctCheck: {
+    position: 'absolute',
+    fontSize: 30,
+    color: 'green',
   },
 });
