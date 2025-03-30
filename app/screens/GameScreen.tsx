@@ -167,21 +167,16 @@ const styles = StyleSheet.create({
   },
   wrongX: {
     position: 'absolute',
-    fontSize: itemWidth * 0.4,
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -15 }, { translateY: -15 }],
+    fontSize: 30,
   },
   correctAnswer: {
     backgroundColor: '#d4edda', // Light green
   },
   correctCheck: {
     position: 'absolute',
-    fontSize: itemWidth * 0.4,
+    fontSize: itemWidth * 0.3,
     color: 'green',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -15 }, { translateY: -15 }],
+    textAlign: 'center',
   },
   winScreen: {
     position: 'absolute',
