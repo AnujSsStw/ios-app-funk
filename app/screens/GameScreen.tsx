@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-//import { Audio } from 'expo-av'; //Removed as not used in edited code
+import { Audio } from 'expo-av';
 
 const animals = [
   { name: 'Lion', image: '🦁' },
@@ -37,8 +38,7 @@ export default function GameScreen() {
           <TouchableOpacity
             key={index}
             style={styles.animalButton}
-            onPress={() => handleAnimalPress(index)}
-            activeOpacity={0.7}>
+            onPress={() => handleAnimalPress(index)}>
             <ThemedText style={styles.animalEmoji}>{animal.image}</ThemedText>
           </TouchableOpacity>
         ))}

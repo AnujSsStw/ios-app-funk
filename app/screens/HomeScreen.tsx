@@ -10,7 +10,7 @@ export default function HomeScreen() {
     <ThemedView style={styles.container}>
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => router.push('/screens/game')}>
+        onPress={() => router.push('/screens/GameScreen')}>
         <ThemedText style={styles.buttonText}>Start Game</ThemedText>
       </TouchableOpacity>
     </ThemedView>
@@ -20,16 +20,16 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
-    backgroundColor: '#4CAF50',
     padding: 20,
+    backgroundColor: '#4CAF50',
     borderRadius: 10,
   },
   buttonText: {
-    color: 'white',
     fontSize: 24,
+    color: 'white',
   },
 });
