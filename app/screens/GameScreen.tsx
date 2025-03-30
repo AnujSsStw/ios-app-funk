@@ -22,17 +22,26 @@ const spacing = 10;
 const numColumns = 3;
 const itemWidth = (width - (spacing * (numColumns + 1))) / numColumns;
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export default function GameScreen() {
   const [currentAnimal, setCurrentAnimal] = useState(0);
   const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
   const [correctAnswers, setCorrectAnswers] = useState<number[]>([]); // Track correct answers
   const [showWinScreen, setShowWinScreen] = useState(false); // State for win screen
+  const [shuffledAnimals, setShuffledAnimals] = useState(shuffleArray([...animals])); // Shuffle on mount
   const { playCorrectSound, playInstructions } = useAudio();
   const fadeAnim = new Animated.Value(1); // For fade animation
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      playInstructions(`Find the ${animals[currentAnimal].name}`);
+      playInstructions(`Find the ${shuffledAnimals[currentAnimal].name}`);
     }, 500);
     return () => clearTimeout(timeout);
   }, [currentAnimal]);
@@ -75,19 +84,26 @@ export default function GameScreen() {
     } else {
       setWrongAnswer(index);
       setTimeout(() => {
-        playInstructions(`Find the ${animals[currentAnimal].name}`);
+        playInstructions(`Find the ${shuffledAnimals[currentAnimal].name}`);
       }, 500);
     }
   };
 
+  const startNewGame = () => {
+    setShuffledAnimals(shuffleArray([...animals]));
+    setShowWinScreen(false);
+    setCurrentAnimal(0);
+    setCorrectAnswers([]);
+  };
+
   const handleWinScreenTap = () => {
-    router.push('/');
+    startNewGame();
   };
 
   useEffect(() => {
     if (showWinScreen) {
       const timer = setTimeout(() => {
-        router.push('/');
+        startNewGame();
       }, 5000);
 
       return () => clearTimeout(timer);
@@ -96,9 +112,9 @@ export default function GameScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Find the {animals[currentAnimal].name}</ThemedText>
+      <ThemedText style={styles.title}>Find the {shuffledAnimals[currentAnimal].name}</ThemedText>
       <View style={styles.grid}>
-        {animals.map((animal, index) => (
+        {shuffledAnimals.map((animal, index) => (
           <TouchableOpacity
             key={index}
             style={[styles.animalButton, wrongAnswer === index && styles.wrongAnswer, correctAnswers.includes(index) && styles.correctAnswer]}
