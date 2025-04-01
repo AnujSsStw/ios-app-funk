@@ -6,13 +6,21 @@ import { Platform } from 'react-native';
 
 export function useAudio() {
   const playSound = useCallback(async () => {
+    let sound;
     try {
-      const { sound } = await Audio.Sound.createAsync(require('../assets/audio/correct.mp3'));
-      await sound.playAsync();
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for sound to finish
-      await sound.unloadAsync(); // Properly cleanup the sound
+      const soundObject = await Audio.Sound.createAsync(
+        require('../assets/audio/correct.mp3'),
+        { shouldPlay: true }
+      );
+      sound = soundObject.sound;
+      await sound.setVolumeAsync(1.0);
+      await new Promise(resolve => setTimeout(resolve, 500));
     } catch (error) {
       console.warn('Sound playback error:', error);
+    } finally {
+      if (sound) {
+        await sound.unloadAsync();
+      }
     }
   }, []);
 
