@@ -5,17 +5,13 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useAudio } from '@/hooks/useAudio';
 
-const animals = [
-  { name: 'Sunflower', image: '🌻' },
-  { name: 'Mountain', image: '⛰️' },
-  { name: 'Forest', image: '🌲' },
-  { name: 'Cat', image: '🐱' },
-  { name: 'Road', image: '🛣️' },
-  { name: 'Ice Cream', image: '🍦' },
-  { name: 'Snow Peak', image: '🏔️' },
-  { name: 'Strawberry', image: '🍓' },
-  { name: 'Cloud', image: '☁️' }
-];
+import { useLocalSearchParams } from 'expo-router';
+import { imagePackages } from '@/constants/ImagePackages';
+
+const GameScreen = () => {
+  const { packageIndex } = useLocalSearchParams();
+  const selectedPackage = imagePackages[Number(packageIndex)];
+  const items = selectedPackage.items;
 
 const { width, height } = Dimensions.get('window'); // Get both width and height
 const spacing = 10;
@@ -112,9 +108,9 @@ export default function GameScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Find the {shuffledAnimals[currentAnimal].name}</ThemedText>
+      <ThemedText style={styles.title}>Find the {shuffledItems[currentItem].name}</ThemedText>
       <View style={styles.grid}>
-        {shuffledAnimals.map((animal, index) => (
+        {shuffledItems.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={[styles.animalButton, wrongAnswer === index && styles.wrongAnswer, correctAnswers.includes(index) && styles.correctAnswer]}
