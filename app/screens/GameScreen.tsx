@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: spacing,
+    margin: spacing/2,
     padding: 10,
   },
   animalText: {
