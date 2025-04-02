@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: '15%',
+    paddingTop: '40%',
   },
   title: {
     fontSize: 32,
