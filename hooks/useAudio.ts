@@ -1,35 +1,58 @@
 
 import { Audio } from 'expo-av';
 import * as Speech from 'expo-speech';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { Platform } from 'react-native';
 
 export function useAudio() {
+  const soundRef = useRef<Audio.Sound | null>(null);
+
   const playSound = useCallback(async () => {
-    let sound;
     try {
-      const soundObject = await Audio.Sound.createAsync(
+      if (soundRef.current) {
+        await soundRef.current.unloadAsync();
+      }
+      
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: false,
+        shouldDuckAndroid: true,
+      });
+
+      const { sound } = await Audio.Sound.createAsync(
         require('../assets/audio/correct.mp3'),
-        { shouldPlay: true }
+        { shouldPlay: true, volume: 1.0 }
       );
-      sound = soundObject.sound;
-      await sound.setVolumeAsync(1.0);
-      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      soundRef.current = sound;
+      await sound.playAsync();
+      
+      sound.setOnPlaybackStatusUpdate(async (status) => {
+        if (status.didJustFinish) {
+          await sound.unloadAsync();
+          soundRef.current = null;
+        }
+      });
     } catch (error) {
       console.warn('Sound playback error:', error);
-    } finally {
-      if (sound) {
-        await sound.unloadAsync();
-      }
     }
   }, []);
 
   const playInstructions = useCallback(async (text: string) => {
-    if (Platform.OS === 'web') {
-      const utterance = new SpeechSynthesisUtterance(text);
-      window.speechSynthesis.speak(utterance);
-    } else {
-      await Speech.speak(text);
+    try {
+      if (Platform.OS === 'web') {
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+      } else {
+        await Speech.speak(text, {
+          language: 'en',
+          pitch: 1,
+          rate: 0.8,
+        });
+      }
+    } catch (error) {
+      console.warn('Speech synthesis error:', error);
     }
   }, []);
 
