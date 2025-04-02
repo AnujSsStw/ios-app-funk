@@ -106,7 +106,11 @@ export default function GameScreen() {
             key={index}
             style={[styles.animalButton, wrongAnswer === index && styles.wrongAnswer, correctAnswers.includes(index) && styles.correctAnswer]}
             onPress={() => handlePress(index)}>
-            <ThemedText style={styles.animalText}>{item.image}</ThemedText>
+            {item.isCustom ? (
+              <Image source={{ uri: item.image }} style={styles.customImage} />
+            ) : (
+              <ThemedText style={styles.animalText}>{item.image}</ThemedText>
+            )}
             {wrongAnswer === index && (
               <ThemedText style={styles.wrongX}>❌</ThemedText>
             )}
@@ -128,6 +132,11 @@ export default function GameScreen() {
 }
 
 const styles = StyleSheet.create({
+  customImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+  },
   container: {
     flex: 1,
     paddingTop: height * 0.1,
