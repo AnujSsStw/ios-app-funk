@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -8,8 +8,7 @@ import { imagePackages } from '@/constants/ImagePackages';
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <ThemedView style={styles.container}>
+    <ThemedView style={styles.container}>
       <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
       <ThemedText style={styles.subtitle}>Pick your game.</ThemedText>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -26,7 +25,6 @@ export default function HomeScreen() {
         ))}
       </ScrollView>
     </ThemedView>
-    </SafeAreaView>
   );
 }
 
@@ -34,7 +32,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: 20,
+    paddingTop: '65%',
     backgroundColor: '#E91E63',
   },
   mainTitle: {
