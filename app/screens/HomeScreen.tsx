@@ -23,6 +23,11 @@ export default function HomeScreen() {
             <ThemedText style={styles.buttonText}>{pack.theme}</ThemedText>
           </TouchableOpacity>
         ))}
+        <TouchableOpacity 
+          style={[styles.button, styles.createButton]}
+          onPress={() => router.push('/screens/CreateGameScreen')}>
+          <ThemedText style={styles.buttonText}>Create your own</ThemedText>
+        </TouchableOpacity>
       </ScrollView>
     </ThemedView>
   );
@@ -74,6 +79,9 @@ const styles = StyleSheet.create({
   },
   greenButton: {
     backgroundColor: '#4CAF50',
+  },
+  createButton: {
+    backgroundColor: '#9C27B0',
   },
   buttonText: {
     fontSize: 28,
