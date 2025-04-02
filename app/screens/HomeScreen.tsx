@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: '35%',
+    paddingTop: '45%',
     backgroundColor: '#E91E63',
   },
   mainTitle: {
@@ -40,16 +40,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black',
     fontWeight: 'bold',
+    paddingHorizontal: 10,
   },
   subtitle: {
     fontSize: 32,
     textAlign: 'center',
     color: 'black',
-    marginTop: 10,
+    marginTop: 20,
+    marginBottom: 30,
   },
   scrollContent: {
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
   button: {
     width: '80%',
