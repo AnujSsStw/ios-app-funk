@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
-import { StyleSheet, View, TouchableOpacity, Dimensions, Animated } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, Animated, Image } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useAudio } from '@/hooks/useAudio';
