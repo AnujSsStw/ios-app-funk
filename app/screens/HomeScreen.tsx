@@ -10,7 +10,7 @@ export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
-      <ThemedText style={styles.subtitle}>Pick your game.</ThemedText>
+      <ThemedText style={styles.subtitle}>Pick your theme.</ThemedText>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {imagePackages.map((pack, index) => (
           <TouchableOpacity 
