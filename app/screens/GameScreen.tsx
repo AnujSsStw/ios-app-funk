@@ -91,7 +91,7 @@ export default function GameScreen() {
   useEffect(() => {
     if (showWinScreen) {
       const timer = setTimeout(() => {
-        router.push('/');
+        router.replace('/screens/HomeScreen');
       }, 2000);
       return () => clearTimeout(timer);
     }
