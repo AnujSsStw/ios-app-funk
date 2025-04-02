@@ -80,5 +80,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontWeight: 'bold',
+    paddingVertical: 5,
+    lineHeight: 32,
   },
 });
