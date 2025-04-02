@@ -1,14 +1,20 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { imagePackages, loadCustomThemes } from '@/constants/ImagePackages';
+import { ImagePackage, imagePackages, loadCustomThemes } from '@/constants/ImagePackages';
 
 export default function HomeScreen() {
+  const [packages, setPackages] = useState<ImagePackage[]>(imagePackages);
+
   useEffect(() => {
-    loadCustomThemes();
+    const loadThemes = async () => {
+      await loadCustomThemes();
+      setPackages([...imagePackages]);
+    };
+    loadThemes();
   }, []);
 
   return (
@@ -16,7 +22,7 @@ export default function HomeScreen() {
       <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
       <ThemedText style={styles.subtitle}>Pick your theme.</ThemedText>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {imagePackages.map((pack, index) => (
+        {packages.map((pack, index) => (
           <TouchableOpacity 
             key={index}
             style={[styles.button, index === 1 ? styles.yellowButton : index === 0 ? styles.blueButton : styles.greenButton]}
