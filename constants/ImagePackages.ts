@@ -49,7 +49,12 @@ export let imagePackages: ImagePackage[] = [
       { name: 'Sushi', image: '🍣' },
       { name: 'Taco', image: '🌮' },
       { name: 'Cookie', image: '🍪' },
-
+      { name: 'Fruit', image: '🍎' },
+      { name: 'Cake', image: '🎂' },
+      { name: 'Donut', image: '🍩' }
+    ]
+  }
+];
 
 export const saveCustomTheme = async (theme: ImagePackage) => {
   try {
@@ -74,10 +79,3 @@ export const loadCustomThemes = async () => {
     console.error('Error loading custom themes:', error);
   }
 };
-
-      { name: 'Fruit', image: '🍎' },
-      { name: 'Cake', image: '🎂' },
-      { name: 'Donut', image: '🍩' }
-    ]
-  }
-];
