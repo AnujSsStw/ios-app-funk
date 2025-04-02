@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -8,32 +8,36 @@ import { imagePackages } from '@/constants/ImagePackages';
 
 export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
-      <ThemedText style={styles.subtitle}>Pick your game.</ThemedText>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {imagePackages.map((pack, index) => (
-          <TouchableOpacity 
-            key={index}
-            style={[styles.button, index === 1 ? styles.yellowButton : index === 0 ? styles.blueButton : styles.greenButton]}
-            onPress={() => router.push({
-              pathname: '/screens/GameScreen',
-              params: { packageIndex: index }
-            })}>
-            <ThemedText style={styles.buttonText}>{pack.theme}</ThemedText>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </ThemedView>
+    <SafeAreaView style={styles.safeArea}>
+      <ThemedView style={styles.container}>
+        <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
+        <ThemedText style={styles.subtitle}>Pick your game.</ThemedText>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {imagePackages.map((pack, index) => (
+            <TouchableOpacity 
+              key={index}
+              style={[styles.button, index === 1 ? styles.yellowButton : index === 0 ? styles.blueButton : styles.greenButton]}
+              onPress={() => router.push({
+                pathname: '/screens/GameScreen',
+                params: { packageIndex: index }
+              })}>
+              <ThemedText style={styles.buttonText}>{pack.theme}</ThemedText>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </ThemedView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#E91E63',
+  },
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: '65%',
-    backgroundColor: '#E91E63',
   },
   mainTitle: {
     fontSize: 48,
@@ -41,6 +45,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     paddingHorizontal: 10,
+    marginTop: 40,
   },
   subtitle: {
     fontSize: 32,
