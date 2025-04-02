@@ -105,7 +105,7 @@ export default function CreateGameScreen() {
     setAudio(newAudio);
   };
 
-  const finishSetup = () => {
+  const finishSetup = async () => {
     if (completedImages.length !== images.filter(img => img !== null).length) {
       Alert.alert('Incomplete', 'Please record audio for all images');
       return;
