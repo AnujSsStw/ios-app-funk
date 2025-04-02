@@ -31,7 +31,8 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{
         headerShown: false,
-        gestureEnabled: false,
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
         headerLeft: () => null,
       }}>
         <Stack.Screen name="index" />
