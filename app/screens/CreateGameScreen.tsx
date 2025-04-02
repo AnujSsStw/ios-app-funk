@@ -111,12 +111,17 @@ export default function CreateGameScreen() {
     }
 
     // Save the custom theme
-    const customTheme = {
+    const customTheme: ImagePackage = {
       theme,
-      images,
-      audio,
+      items: images.filter(img => img !== null).map((img, index) => ({
+        name: `Custom ${index + 1}`,
+        image: img,
+        isCustom: true,
+        audio: audio[index]
+      }))
     };
-    // You'll need to implement storage of the custom theme
+    
+    imagePackages.push(customTheme);
     router.back();
   };
 

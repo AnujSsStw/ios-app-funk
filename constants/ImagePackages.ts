@@ -4,10 +4,12 @@ export interface ImagePackage {
   items: Array<{
     name: string;
     image: string;
+    isCustom?: boolean;
+    audio?: string;
   }>;
 }
 
-export const imagePackages: ImagePackage[] = [
+export let imagePackages: ImagePackage[] = [
   {
     theme: "Nature",
     items: [
