@@ -1,12 +1,16 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { imagePackages } from '@/constants/ImagePackages';
+import { imagePackages, loadCustomThemes } from '@/constants/ImagePackages';
 
 export default function HomeScreen() {
+  useEffect(() => {
+    loadCustomThemes();
+  }, []);
+
   return (
     <ThemedView style={styles.container}>
       <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>

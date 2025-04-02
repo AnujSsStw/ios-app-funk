@@ -9,6 +9,8 @@ export interface ImagePackage {
   }>;
 }
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export let imagePackages: ImagePackage[] = [
   {
     theme: "Nature",
@@ -47,6 +49,32 @@ export let imagePackages: ImagePackage[] = [
       { name: 'Sushi', image: '🍣' },
       { name: 'Taco', image: '🌮' },
       { name: 'Cookie', image: '🍪' },
+
+
+export const saveCustomTheme = async (theme: ImagePackage) => {
+  try {
+    const existingThemes = await AsyncStorage.getItem('customThemes');
+    const customThemes = existingThemes ? JSON.parse(existingThemes) : [];
+    customThemes.push(theme);
+    await AsyncStorage.setItem('customThemes', JSON.stringify(customThemes));
+    imagePackages.push(theme);
+  } catch (error) {
+    console.error('Error saving custom theme:', error);
+  }
+};
+
+export const loadCustomThemes = async () => {
+  try {
+    const existingThemes = await AsyncStorage.getItem('customThemes');
+    if (existingThemes) {
+      const customThemes = JSON.parse(existingThemes);
+      imagePackages.push(...customThemes);
+    }
+  } catch (error) {
+    console.error('Error loading custom themes:', error);
+  }
+};
+
       { name: 'Fruit', image: '🍎' },
       { name: 'Cake', image: '🎂' },
       { name: 'Donut', image: '🍩' }

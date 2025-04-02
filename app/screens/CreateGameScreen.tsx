@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ImagePackage, imagePackages } from '@/constants/ImagePackages';
+import { ImagePackage, saveCustomTheme } from '@/constants/ImagePackages';
 import { StyleSheet, View, TouchableOpacity, TextInput, Image, Alert, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Audio } from 'expo-av';
@@ -122,7 +122,7 @@ export default function CreateGameScreen() {
       }))
     };
     
-    imagePackages.push(customTheme);
+    await saveCustomTheme(customTheme);
     router.back();
   };
 
