@@ -142,9 +142,10 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignContent: 'space-between',
     padding: spacing,
+    height: itemWidth * 3 + spacing * 2,
   },
   animalButton: {
     width: itemWidth,
@@ -153,7 +154,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: spacing/2,
     padding: 10,
   },
   animalText: {
