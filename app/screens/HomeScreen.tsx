@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -32,16 +32,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: 100,
     backgroundColor: '#E91E63',
+    paddingTop: Platform.OS === 'ios' ? 120 : 100,
   },
   mainTitle: {
     fontSize: 48,
     textAlign: 'center',
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '700',
     paddingHorizontal: 10,
-    marginTop: 40,
+    lineHeight: Platform.OS === 'ios' ? 58 : 48,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   subtitle: {
     fontSize: 32,
@@ -49,6 +51,8 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 20,
     marginBottom: 30,
+    lineHeight: Platform.OS === 'ios' ? 38 : 32,
+    includeFontPadding: false,
   },
   scrollContent: {
     alignItems: 'center',
