@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: '45%',
+    paddingTop: '65%',
     backgroundColor: '#E91E63',
   },
   mainTitle: {
