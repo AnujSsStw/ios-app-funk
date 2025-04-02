@@ -9,12 +9,13 @@ import { imagePackages } from '@/constants/ImagePackages';
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Select a Theme</ThemedText>
+      <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
+      <ThemedText style={styles.subtitle}>Pick your game.</ThemedText>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {imagePackages.map((pack, index) => (
           <TouchableOpacity 
             key={index}
-            style={styles.button}
+            style={[styles.button, index === 1 ? styles.yellowButton : index === 0 ? styles.blueButton : styles.greenButton]}
             onPress={() => router.push({
               pathname: '/screens/GameScreen',
               params: { packageIndex: index }
@@ -32,12 +33,19 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: '35%',
+    backgroundColor: '#E91E63',
   },
-  title: {
+  mainTitle: {
+    fontSize: 48,
+    textAlign: 'center',
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  subtitle: {
     fontSize: 32,
     textAlign: 'center',
-    marginVertical: 10,
-    paddingTop: 10,
+    color: 'black',
+    marginTop: 10,
   },
   scrollContent: {
     alignItems: 'center',
@@ -45,14 +53,25 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '80%',
-    padding: 20,
-    backgroundColor: '#4CAF50',
+    padding: 15,
     borderRadius: 10,
     marginVertical: 10,
+    borderWidth: 3,
+    borderColor: 'black',
+  },
+  blueButton: {
+    backgroundColor: '#00BCD4',
+  },
+  yellowButton: {
+    backgroundColor: '#FFEB3B',
+  },
+  greenButton: {
+    backgroundColor: '#4CAF50',
   },
   buttonText: {
-    fontSize: 24,
-    color: 'white',
+    fontSize: 28,
+    color: 'black',
     textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
