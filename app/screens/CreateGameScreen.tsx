@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { ImagePackage, imagePackages } from '@/constants/ImagePackages';
 import { StyleSheet, View, TouchableOpacity, TextInput, Image, Alert, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Audio } from 'expo-av';
