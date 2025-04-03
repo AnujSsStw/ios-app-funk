@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
 import { StyleSheet, View, TouchableOpacity, Dimensions, Animated, Image } from 'react-native';
+import { Audio } from 'expo-av';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useAudio } from '@/hooks/useAudio';
@@ -36,8 +37,13 @@ export default function GameScreen() {
   const fadeAnim = new Animated.Value(1);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      playInstructions(`Find the ${shuffledItems[currentItem].name}`);
+    const timeout = setTimeout(async () => {
+      if (shuffledItems[currentItem].isCustom && shuffledItems[currentItem].audio) {
+        const { sound } = await Audio.Sound.createAsync({ uri: shuffledItems[currentItem].audio });
+        await sound.playAsync();
+      } else {
+        playInstructions(`Find the ${shuffledItems[currentItem].name}`);
+      }
     }, 500);
     return () => clearTimeout(timeout);
   }, [currentItem]);
@@ -99,7 +105,9 @@ export default function GameScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title}>Find the {shuffledItems[currentItem].name}</ThemedText>
+      {!shuffledItems[currentItem].isCustom && (
+        <ThemedText style={styles.title}>Find the {shuffledItems[currentItem].name}</ThemedText>
+      )}
       <View style={styles.grid}>
         {shuffledItems.map((item, index) => (
           <TouchableOpacity
