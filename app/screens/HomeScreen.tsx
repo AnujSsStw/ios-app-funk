@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ImagePackage, imagePackages, loadCustomThemes } from '@/constants/ImagePackages';
@@ -9,13 +9,15 @@ import { ImagePackage, imagePackages, loadCustomThemes } from '@/constants/Image
 export default function HomeScreen() {
   const [packages, setPackages] = useState<ImagePackage[]>(imagePackages);
 
-  useEffect(() => {
-    const loadThemes = async () => {
-      await loadCustomThemes();
-      setPackages([...imagePackages]);
-    };
-    loadThemes();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadThemes = async () => {
+        await loadCustomThemes();
+        setPackages([...imagePackages]);
+      };
+      loadThemes();
+    }, [])
+  );
 
   return (
     <ThemedView style={styles.container}>
