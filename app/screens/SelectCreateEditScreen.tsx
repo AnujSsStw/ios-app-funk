@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingTop: 40, // Added top padding for safety
+    backgroundColor: '#E91E63',
   },
   scrollContent: {
     alignItems: 'center',
