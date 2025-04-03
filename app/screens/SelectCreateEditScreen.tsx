@@ -53,11 +53,11 @@ export default function SelectCreateEditScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    backgroundColor: '#E91E63',
   },
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#E91E63',
     paddingTop: 40, // Added top padding for safety
   },
   scrollContent: {
