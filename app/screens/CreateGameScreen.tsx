@@ -4,7 +4,7 @@ import { ImagePackage, saveCustomTheme } from '@/constants/ImagePackages';
 import { StyleSheet, View, TouchableOpacity, TextInput, Image, Alert, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Audio } from 'expo-av';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
@@ -13,7 +13,7 @@ const spacing = 10;
 const itemWidth = (width - (spacing * 4)) / 3;
 
 export default function CreateGameScreen() {
-  const { editTheme } = router.useLocalSearchParams();
+  const { editTheme } = useLocalSearchParams();
   const [theme, setTheme] = useState('');
   const [showThemeInput, setShowThemeInput] = useState(!editTheme);
   const [images, setImages] = useState(Array(9).fill(null));
