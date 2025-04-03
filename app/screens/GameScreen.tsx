@@ -99,8 +99,13 @@ export default function GameScreen() {
       setCurrentItem(nextItem);
     } else {
       setWrongAnswer(index);
-      setTimeout(() => {
-        playInstructions(`Find the ${shuffledItems[currentItem].name}`);
+      setTimeout(async () => {
+        if (shuffledItems[currentItem].isCustom && shuffledItems[currentItem].audio) {
+          const { sound } = await Audio.Sound.createAsync({ uri: shuffledItems[currentItem].audio });
+          await sound.playAsync();
+        } else {
+          playInstructions(`Find the ${shuffledItems[currentItem].name}`);
+        }
       }, 500);
     }
   };
