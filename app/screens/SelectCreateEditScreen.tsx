@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#E91E63',
-    paddingTop: Platform.OS === 'ios' ? 150 : 130,
+    paddingTop: Platform.OS === 'ios' ? 80 : 60,
   },
   scrollContent: {
     alignItems: 'center',
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: 'black',
     fontWeight: 'bold',
-    marginTop: 40,
+    marginTop: 30,
     marginBottom: 20,
     paddingHorizontal: 20,
   },
