@@ -163,8 +163,17 @@ export default function CreateGameScreen() {
           <TouchableOpacity style={styles.button} onPress={saveImage}>
             <ThemedText style={styles.buttonText}>Save</ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={removeAudio}>
-            <ThemedText style={styles.buttonText}>Remove</ThemedText>
+          <TouchableOpacity style={styles.button} onPress={() => {
+            const newImages = [...images];
+            newImages[currentImageIndex] = null;
+            const newAudio = [...audio];
+            newAudio[currentImageIndex] = null;
+            setImages(newImages);
+            setAudio(newAudio);
+            setCompletedImages(completedImages.filter(i => i !== currentImageIndex));
+            setCurrentImageIndex(null);
+          }}>
+            <ThemedText style={styles.buttonText}>Remove Image</ThemedText>
           </TouchableOpacity>
         </View>
       </ThemedView>
@@ -175,7 +184,11 @@ export default function CreateGameScreen() {
     <ThemedView style={styles.container}>
       <View style={styles.grid}>
         {images.map((image, index) => (
-          image && (
+          <TouchableOpacity
+            key={index}
+            style={[styles.imageContainer, !image && styles.emptySlot]}
+            onPress={() => image && setCurrentImageIndex(index)}>
+            {image ? (
             <TouchableOpacity
               key={index}
               style={styles.imageContainer}
@@ -187,7 +200,10 @@ export default function CreateGameScreen() {
                 </View>
               )}
             </TouchableOpacity>
-          )
+          ) : (
+              <ThemedText style={styles.emptySlotText}>Empty Slot</ThemedText>
+            )}
+          </TouchableOpacity>
         ))}
       </View>
       <TouchableOpacity style={styles.button} onPress={finishSetup}>
@@ -264,5 +280,15 @@ const styles = StyleSheet.create({
   checkmarkText: {
     fontSize: 40,
     color: 'white',
+  },
+  emptySlot: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptySlotText: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
   },
 });
