@@ -1,7 +1,7 @@
 
 import { createConfig } from "@gluestack-ui/themed"
 
-export const config = createConfig({
+const config = createConfig({
   light: {
     colors: {
       primary: '#000000',
@@ -15,3 +15,5 @@ export const config = createConfig({
     },
   },
 })
+
+export default config;
