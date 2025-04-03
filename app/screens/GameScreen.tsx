@@ -40,14 +40,15 @@ export default function GameScreen() {
     let sound;
     const playAudio = async () => {
       try {
-        if (shuffledItems[currentItem].isCustom && shuffledItems[currentItem].audio) {
-          const { sound: audioSound } = await Audio.Sound.createAsync(
-            { uri: shuffledItems[currentItem].audio },
-            { shouldPlay: true }
-          );
-          sound = audioSound;
-          await sound.playAsync();
-        } else if (!shuffledItems[currentItem].isCustom) {
+        if (shuffledItems[currentItem].isCustom) {
+          if (shuffledItems[currentItem].audio) {
+            const { sound: audioSound } = await Audio.Sound.createAsync(
+              { uri: shuffledItems[currentItem].audio }
+            );
+            sound = audioSound;
+            await sound.playAsync();
+          }
+        } else {
           playInstructions(`Find the ${shuffledItems[currentItem].name}`);
         }
       } catch (error) {
