@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ImagePackage, saveCustomTheme, imagePackages, loadCustomThemes } from '@/constants/ImagePackages';
 import { StyleSheet, View, TouchableOpacity, TextInput, Image, Alert, Dimensions } from 'react-native';
@@ -32,7 +31,7 @@ export default function CreateGameScreen() {
           const newImages = Array(9).fill(null);
           const newAudio = Array(9).fill(null);
           const completed = [];
-          
+
           themeData.items.forEach((item, index) => {
             if (item.image) {
               newImages[index] = item.image;
@@ -40,7 +39,7 @@ export default function CreateGameScreen() {
               completed.push(index);
             }
           });
-          
+
           setImages(newImages);
           setAudio(newAudio);
           setCompletedImages(completed);
@@ -102,7 +101,7 @@ export default function CreateGameScreen() {
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
     setRecording(null);
-    
+
     const newAudio = [...audio];
     newAudio[currentImageIndex] = uri;
     setAudio(newAudio);
@@ -150,7 +149,7 @@ export default function CreateGameScreen() {
         audio: audio[index]
       }))
     };
-    
+
     await saveCustomTheme(customTheme, editTheme ? true : false);
     router.back();
   };
@@ -247,6 +246,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: spacing,
     backgroundColor: '#E91E63',
+    justifyContent: 'center', // Center content vertically
   },
   input: {
     backgroundColor: 'white',
@@ -254,12 +254,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 20,
     fontSize: 18,
+    width: '80%',
+    alignSelf: 'center',
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginTop: 20,
+    flex: 1,
   },
   imageContainer: {
     width: itemWidth,
@@ -290,6 +293,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     minWidth: 100,
     alignItems: 'center',
+    width: '80%',
+    alignSelf: 'center',
   },
   buttonText: {
     fontSize: 18,
