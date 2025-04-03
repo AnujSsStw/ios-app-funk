@@ -7,18 +7,11 @@ import { ThemedView } from '@/components/ThemedView';
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
-      <ThemedView style={styles.content}>
-        <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={() => router.push('/screens/ThemeSelectScreen')}>
-          <ThemedText style={styles.buttonText}>Start New Game!</ThemedText>
-        </TouchableOpacity>
-      </ThemedView>
+      <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
       <TouchableOpacity 
-        style={styles.footerButton}
-        onPress={() => router.push('/screens/CreateGameScreen')}>
-        <ThemedText style={styles.footerButtonText}>Create your own</ThemedText>
+        style={styles.button}
+        onPress={() => router.push('/screens/ThemeSelectScreen')}>
+        <ThemedText style={styles.buttonText}>Start New Game!</ThemedText>
       </TouchableOpacity>
     </ThemedView>
   );
@@ -27,12 +20,9 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
     backgroundColor: '#E91E63',
     paddingTop: Platform.OS === 'ios' ? 120 : 100,
-  },
-  content: {
-    flex: 1,
-    padding: 20,
     alignItems: 'center',
   },
   mainTitle: {
@@ -60,16 +50,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     lineHeight: 32,
-  },
-  footerButton: {
-    width: '100%',
-    padding: 15,
-    backgroundColor: '#4A0D2D',
-    alignItems: 'center',
-  },
-  footerButtonText: {
-    fontSize: 20,
-    color: 'white',
-    fontWeight: 'bold',
   },
 });
