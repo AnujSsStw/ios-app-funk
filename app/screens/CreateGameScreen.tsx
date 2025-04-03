@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ImagePackage, saveCustomTheme } from '@/constants/ImagePackages';
+import { ImagePackage, saveCustomTheme, imagePackages, loadCustomThemes } from '@/constants/ImagePackages';
 import { StyleSheet, View, TouchableOpacity, TextInput, Image, Alert, Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Audio } from 'expo-av';
@@ -34,9 +34,11 @@ export default function CreateGameScreen() {
           const completed = [];
           
           themeData.items.forEach((item, index) => {
-            newImages[index] = item.image;
-            newAudio[index] = item.audio;
-            completed.push(index);
+            if (item.image) {
+              newImages[index] = item.image;
+              newAudio[index] = item.audio;
+              completed.push(index);
+            }
           });
           
           setImages(newImages);
