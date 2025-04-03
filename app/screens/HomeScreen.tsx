@@ -16,11 +16,18 @@ export default function HomeScreen() {
           <ThemedText style={styles.buttonText}>Start New Game!</ThemedText>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity 
-        style={styles.footerButton}
-        onPress={() => router.push('/screens/CreateGameScreen')}>
-        <ThemedText style={styles.footerButtonText}>Create your own</ThemedText>
-      </TouchableOpacity>
+      <View style={styles.footerContainer}>
+        <TouchableOpacity 
+          style={[styles.footerButton, styles.footerButtonHalf]}
+          onPress={() => router.push('/screens/CreateGameScreen')}>
+          <ThemedText style={styles.footerButtonText}>Create your own</ThemedText>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.footerButton, styles.footerButtonHalf]}
+          onPress={() => router.push('/screens/EditGameScreen')}>
+          <ThemedText style={styles.footerButtonText}>Edit game</ThemedText>
+        </TouchableOpacity>
+      </View>
     </ThemedView>
   );
 }
@@ -62,11 +69,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 32,
   },
-  footerButton: {
+  footerContainer: {
+    flexDirection: 'row',
     width: '100%',
+  },
+  footerButton: {
     padding: 20,
     backgroundColor: '#4A0D2D',
     alignItems: 'center',
+  },
+  footerButtonHalf: {
+    flex: 1,
   },
   footerButtonText: {
     fontSize: 24,
