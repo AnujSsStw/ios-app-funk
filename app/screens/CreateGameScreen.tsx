@@ -157,9 +157,9 @@ export default function CreateGameScreen() {
   if (showThemeInput) {
     return (
       <ThemedView style={styles.container}>
+        <ThemedText style={styles.titleText}>Name your game</ThemedText>
         <TextInput
           style={styles.input}
-          placeholder="What is the theme of your game?"
           value={theme}
           onChangeText={setTheme}
         />
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: spacing,
     backgroundColor: '#E91E63',
-    justifyContent: 'center', // Center content vertically
+    justifyContent: 'center', 
   },
   input: {
     backgroundColor: 'white',
@@ -325,4 +325,11 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
+  titleText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+    color: 'white'
+  }
 });
