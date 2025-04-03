@@ -210,25 +210,39 @@ export default function CreateGameScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.grid}>
+      <View style={[styles.grid, { marginTop: 100 }]}>
         {images.map((image, index) => (
           <TouchableOpacity
             key={index}
             style={[styles.imageContainer, !image && styles.emptySlot]}
-            onPress={() => image && setCurrentImageIndex(index)}>
+            onPress={async () => {
+              if (!image) {
+                const result = await ImagePicker.launchImageLibraryAsync({
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  aspect: [1, 1],
+                  quality: 1,
+                });
+
+                if (!result.canceled) {
+                  const newImages = [...images];
+                  newImages[index] = result.assets[0].uri;
+                  setImages(newImages);
+                }
+              } else {
+                setCurrentImageIndex(index);
+              }
+            }}>
             {image ? (
-            <TouchableOpacity
-              key={index}
-              style={styles.imageContainer}
-              onPress={() => setCurrentImageIndex(index)}>
-              <Image source={{ uri: image }} style={styles.image} />
-              {completedImages.includes(index) && (
-                <View style={styles.checkmark}>
-                  <ThemedText style={styles.checkmarkText}>✓</ThemedText>
-                </View>
-              )}
-            </TouchableOpacity>
-          ) : (
+              <>
+                <Image source={{ uri: image }} style={styles.image} />
+                {completedImages.includes(index) && (
+                  <View style={styles.checkmark}>
+                    <ThemedText style={styles.checkmarkText}>✓</ThemedText>
+                  </View>
+                )}
+              </>
+            ) : (
               <ThemedText style={styles.emptySlotText}>Empty Slot</ThemedText>
             )}
           </TouchableOpacity>
