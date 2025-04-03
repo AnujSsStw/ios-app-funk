@@ -56,13 +56,22 @@ export let imagePackages: ImagePackage[] = [
   }
 ];
 
-export const saveCustomTheme = async (theme: ImagePackage) => {
+export const saveCustomTheme = async (theme: ImagePackage, isUpdate = false) => {
   try {
     const existingThemes = await AsyncStorage.getItem('customThemes');
-    const customThemes = existingThemes ? JSON.parse(existingThemes) : [];
-    customThemes.push(theme);
+    let customThemes = existingThemes ? JSON.parse(existingThemes) : [];
+    
+    if (isUpdate) {
+      // Update existing theme
+      customThemes = customThemes.map(t => t.theme === theme.theme ? theme : t);
+      imagePackages = imagePackages.map(t => t.theme === theme.theme ? theme : t);
+    } else {
+      // Add new theme
+      customThemes.push(theme);
+      imagePackages.push(theme);
+    }
+    
     await AsyncStorage.setItem('customThemes', JSON.stringify(customThemes));
-    imagePackages.push(theme);
   } catch (error) {
     console.error('Error saving custom theme:', error);
   }

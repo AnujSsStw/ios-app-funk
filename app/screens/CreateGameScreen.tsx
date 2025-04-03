@@ -13,13 +13,40 @@ const spacing = 10;
 const itemWidth = (width - (spacing * 4)) / 3;
 
 export default function CreateGameScreen() {
+  const { editTheme } = router.useLocalSearchParams();
   const [theme, setTheme] = useState('');
-  const [showThemeInput, setShowThemeInput] = useState(true);
+  const [showThemeInput, setShowThemeInput] = useState(!editTheme);
   const [images, setImages] = useState(Array(9).fill(null));
   const [currentImageIndex, setCurrentImageIndex] = useState(null);
   const [recording, setRecording] = useState(null);
   const [audio, setAudio] = useState(Array(9).fill(null));
   const [completedImages, setCompletedImages] = useState([]);
+
+  useEffect(() => {
+    const loadExistingTheme = async () => {
+      if (editTheme) {
+        await loadCustomThemes();
+        const themeData = imagePackages.find(pack => pack.theme === editTheme);
+        if (themeData) {
+          setTheme(themeData.theme);
+          const newImages = Array(9).fill(null);
+          const newAudio = Array(9).fill(null);
+          const completed = [];
+          
+          themeData.items.forEach((item, index) => {
+            newImages[index] = item.image;
+            newAudio[index] = item.audio;
+            completed.push(index);
+          });
+          
+          setImages(newImages);
+          setAudio(newAudio);
+          setCompletedImages(completed);
+        }
+      }
+    };
+    loadExistingTheme();
+  }, [editTheme]);
 
   const pickImages = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -111,9 +138,9 @@ export default function CreateGameScreen() {
       return;
     }
 
-    // Save the custom theme
+    // Save or update the custom theme
     const customTheme: ImagePackage = {
-      theme,
+      theme: editTheme || theme,
       items: images.filter(img => img !== null).map((img, index) => ({
         name: `Custom ${index + 1}`,
         image: img,
@@ -122,7 +149,7 @@ export default function CreateGameScreen() {
       }))
     };
     
-    await saveCustomTheme(customTheme);
+    await saveCustomTheme(customTheme, editTheme ? true : false);
     router.back();
   };
 
