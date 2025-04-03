@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ImagePackage, saveCustomTheme, imagePackages, loadCustomThemes } from '@/constants/ImagePackages';
-import { StyleSheet, View, TouchableOpacity, TextInput, Image, Alert, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Alert, Dimensions } from 'react-native';
+import { Button, ButtonText, Input, InputField, VStack, Box } from "@gluestack-ui/themed";
 import * as ImagePicker from 'expo-image-picker';
 import { Audio } from 'expo-av';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -158,16 +159,28 @@ export default function CreateGameScreen() {
     return (
       <ThemedView style={styles.container}>
         <ThemedText style={styles.titleText}>Name your game</ThemedText>
-        <TextInput
-          style={styles.input}
-          value={theme}
-          onChangeText={setTheme}
-        />
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={pickImages}>
-          <ThemedText style={styles.buttonText}>Next</ThemedText>
-        </TouchableOpacity>
+        <VStack space="md" alignItems="center" width="100%">
+          <Input
+            size="xl"
+            variant="rounded"
+            width="80%"
+            backgroundColor="$white">
+            <InputField
+              value={theme}
+              onChangeText={setTheme}
+              placeholder="Enter theme name"
+            />
+          </Input>
+          <Button
+            size="lg"
+            variant="solid"
+            action="primary"
+            onPress={pickImages}
+            width="80%"
+            borderRadius="$full">
+            <ButtonText>Next</ButtonText>
+          </Button>
+        </VStack>
       </ThemedView>
     );
   }
@@ -248,9 +261,17 @@ export default function CreateGameScreen() {
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity style={styles.button} onPress={finishSetup}>
-        <ThemedText style={styles.buttonText}>Finish</ThemedText>
-      </TouchableOpacity>
+      <Button
+        size="lg"
+        variant="solid"
+        action="primary"
+        onPress={finishSetup}
+        width="80%"
+        alignSelf="center"
+        borderRadius="$full"
+        marginTop="$4">
+        <ButtonText>Finish</ButtonText>
+      </Button>
     </ThemedView>
   );
 }
