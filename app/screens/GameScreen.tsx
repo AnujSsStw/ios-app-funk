@@ -28,7 +28,7 @@ export default function GameScreen() {
   const selectedPackage = imagePackages[Number(packageIndex)];
   const items = selectedPackage.items;
   
-  const [currentItem, setCurrentItem] = useState(0);
+  const [currentItem, setCurrentItem] = useState(() => Math.floor(Math.random() * items.length));
   const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
   const [correctAnswers, setCorrectAnswers] = useState<number[]>([]);
   const [showWinScreen, setShowWinScreen] = useState(false);
