@@ -1,46 +1,18 @@
-
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
-import { router, useFocusEffect } from 'expo-router';
+import React from 'react';
+import { StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { ImagePackage, imagePackages, loadCustomThemes } from '@/constants/ImagePackages';
 
 export default function HomeScreen() {
-  const [packages, setPackages] = useState<ImagePackage[]>(imagePackages);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const loadThemes = async () => {
-        await loadCustomThemes();
-        setPackages([...imagePackages]);
-      };
-      loadThemes();
-    }, [])
-  );
-
   return (
     <ThemedView style={styles.container}>
       <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
-      <ThemedText style={styles.subtitle}>Pick your theme.</ThemedText>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {packages.map((pack, index) => (
-          <TouchableOpacity 
-            key={index}
-            style={[styles.button, index === 1 ? styles.yellowButton : index === 0 ? styles.blueButton : styles.greenButton]}
-            onPress={() => router.push({
-              pathname: '/screens/GameScreen',
-              params: { packageIndex: index }
-            })}>
-            <ThemedText style={styles.buttonText}>{pack.theme}</ThemedText>
-          </TouchableOpacity>
-        ))}
-        <TouchableOpacity 
-          style={[styles.button, styles.createButton]}
-          onPress={() => router.push('/screens/CreateGameScreen')}>
-          <ThemedText style={styles.buttonText}>Create your own</ThemedText>
-        </TouchableOpacity>
-      </ScrollView>
+      <TouchableOpacity 
+        style={styles.button}
+        onPress={() => router.push('/screens/ThemeSelectScreen')}>
+        <ThemedText style={styles.buttonText}>Start New Game!</ThemedText>
+      </TouchableOpacity>
     </ThemedView>
   );
 }
@@ -51,6 +23,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#E91E63',
     paddingTop: Platform.OS === 'ios' ? 120 : 100,
+    alignItems: 'center',
   },
   mainTitle: {
     fontSize: 48,
@@ -61,46 +34,21 @@ const styles = StyleSheet.create({
     lineHeight: Platform.OS === 'ios' ? 58 : 48,
     includeFontPadding: false,
     textAlignVertical: 'center',
-  },
-  subtitle: {
-    fontSize: 32,
-    textAlign: 'center',
-    color: 'black',
-    marginTop: 20,
-    marginBottom: 30,
-    lineHeight: Platform.OS === 'ios' ? 38 : 32,
-    includeFontPadding: false,
-  },
-  scrollContent: {
-    alignItems: 'center',
-    paddingVertical: 10,
+    marginBottom: 40,
   },
   button: {
     width: '80%',
-    padding: 15,
-    borderRadius: 10,
-    marginVertical: 10,
+    padding: 20,
+    borderRadius: 15,
+    backgroundColor: '#9C27B0',
     borderWidth: 3,
     borderColor: 'black',
-  },
-  blueButton: {
-    backgroundColor: '#00BCD4',
-  },
-  yellowButton: {
-    backgroundColor: '#FFEB3B',
-  },
-  greenButton: {
-    backgroundColor: '#4CAF50',
-  },
-  createButton: {
-    backgroundColor: '#9C27B0',
   },
   buttonText: {
     fontSize: 28,
     color: 'black',
     textAlign: 'center',
     fontWeight: 'bold',
-    paddingVertical: 5,
     lineHeight: 32,
   },
 });
