@@ -40,6 +40,6 @@ export default function RootLayout() {
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
-    </GluestackUIProvider> {/* Added GluestackUIProvider closing tag */}
+    </GluestackUIProvider>
   );
 }
