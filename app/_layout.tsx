@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { GluestackUIProvider } from "@gluestack-ui/themed";
-import config from "./config/gluestack-ui.config";
+import gluestackUIConfig from "./config/gluestack-ui.config";
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -29,7 +29,7 @@ export default function RootLayout() {
   }
 
   return (
-    <GluestackUIProvider config={config}>
+    <GluestackUIProvider config={gluestackUIConfig}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack screenOptions={{
           headerShown: false,
