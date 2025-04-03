@@ -73,6 +73,8 @@ export const loadCustomThemes = async () => {
     const existingThemes = await AsyncStorage.getItem('customThemes');
     if (existingThemes) {
       const customThemes = JSON.parse(existingThemes);
+      // Remove any existing custom themes before adding new ones
+      imagePackages = imagePackages.slice(0, 3); // Keep only the default themes
       imagePackages.push(...customThemes);
     }
   } catch (error) {
