@@ -1,0 +1,99 @@
+
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, TouchableOpacity, ScrollView, Platform, View } from 'react-native';
+import { router } from 'expo-router';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { ImagePackage, loadCustomThemes, imagePackages } from '@/constants/ImagePackages';
+
+export default function SelectCreateEditScreen() {
+  const [customThemes, setCustomThemes] = useState<ImagePackage[]>([]);
+
+  useEffect(() => {
+    const loadThemes = async () => {
+      await loadCustomThemes();
+      const themes = imagePackages.filter(pack => pack.items.some(item => item.isCustom));
+      setCustomThemes(themes);
+    };
+    loadThemes();
+  }, []);
+
+  return (
+    <ThemedView style={styles.container}>
+      <TouchableOpacity 
+        style={[styles.button, styles.createButton]}
+        onPress={() => router.push('/screens/CreateGameScreen')}>
+        <ThemedText style={styles.buttonText}>New game</ThemedText>
+      </TouchableOpacity>
+
+      <ThemedText style={styles.sectionTitle}>Edit</ThemedText>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {customThemes.length > 0 ? (
+          customThemes.map((theme, index) => (
+            <TouchableOpacity 
+              key={index}
+              style={[styles.button, styles.editButton]}
+              onPress={() => router.push({
+                pathname: '/screens/CreateGameScreen',
+                params: { editTheme: theme.theme }
+              })}>
+              <ThemedText style={styles.buttonText}>{theme.theme}</ThemedText>
+            </TouchableOpacity>
+          ))
+        ) : (
+          <ThemedText style={styles.noThemesText}>Create a new game first.</ThemedText>
+        )}
+      </ScrollView>
+    </ThemedView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#E91E63',
+    paddingTop: Platform.OS === 'ios' ? 120 : 100,
+  },
+  scrollContent: {
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  button: {
+    width: '80%',
+    padding: 15,
+    borderRadius: 10,
+    marginVertical: 10,
+    borderWidth: 3,
+    borderColor: 'black',
+    alignSelf: 'center',
+  },
+  createButton: {
+    backgroundColor: '#9C27B0',
+  },
+  editButton: {
+    backgroundColor: '#4A0D2D',
+  },
+  buttonText: {
+    fontSize: 28,
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingVertical: 5,
+    lineHeight: 32,
+  },
+  sectionTitle: {
+    fontSize: 32,
+    color: 'black',
+    fontWeight: 'bold',
+    marginTop: 40,
+    marginBottom: 20,
+    paddingHorizontal: 20,
+  },
+  noThemesText: {
+    fontSize: 18,
+    color: 'black',
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+});

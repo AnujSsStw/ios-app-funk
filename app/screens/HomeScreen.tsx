@@ -18,7 +18,7 @@ export default function HomeScreen() {
       </View>
       <TouchableOpacity 
         style={styles.footerButton}
-        onPress={() => router.push('/screens/CreateGameScreen')}>
+        onPress={() => router.push('/screens/SelectCreateEditScreen')}>
         <ThemedText style={styles.footerButtonText}>Create your own</ThemedText>
       </TouchableOpacity>
     </ThemedView>
