@@ -46,7 +46,7 @@ export default function GameScreen() {
             { shouldPlay: true }
           );
           sound = audioSound;
-        } else {
+        } else if (!shuffledItems[currentItem].isCustom) {
           playInstructions(`Find the ${shuffledItems[currentItem].name}`);
         }
       } catch (error) {
