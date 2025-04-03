@@ -37,15 +37,31 @@ export default function GameScreen() {
   const fadeAnim = new Animated.Value(1);
 
   useEffect(() => {
-    const timeout = setTimeout(async () => {
-      if (shuffledItems[currentItem].isCustom && shuffledItems[currentItem].audio) {
-        const { sound } = await Audio.Sound.createAsync({ uri: shuffledItems[currentItem].audio });
-        await sound.playAsync();
-      } else {
-        playInstructions(`Find the ${shuffledItems[currentItem].name}`);
+    let sound;
+    const playAudio = async () => {
+      try {
+        if (shuffledItems[currentItem].isCustom && shuffledItems[currentItem].audio) {
+          const { sound: audioSound } = await Audio.Sound.createAsync(
+            { uri: shuffledItems[currentItem].audio },
+            { shouldPlay: true }
+          );
+          sound = audioSound;
+        } else {
+          playInstructions(`Find the ${shuffledItems[currentItem].name}`);
+        }
+      } catch (error) {
+        console.error('Error playing audio:', error);
       }
-    }, 500);
-    return () => clearTimeout(timeout);
+    };
+
+    const timeout = setTimeout(playAudio, 500);
+    
+    return () => {
+      clearTimeout(timeout);
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
   }, [currentItem]);
 
   useEffect(() => {
