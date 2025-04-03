@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, TouchableOpacity, Platform, View } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -7,11 +8,18 @@ import { ThemedView } from '@/components/ThemedView';
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
+      <View style={styles.content}>
+        <ThemedText style={styles.mainTitle}>Find the 🐱</ThemedText>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => router.push('/screens/ThemeSelectScreen')}>
+          <ThemedText style={styles.buttonText}>Start New Game!</ThemedText>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity 
-        style={styles.button}
-        onPress={() => router.push('/screens/ThemeSelectScreen')}>
-        <ThemedText style={styles.buttonText}>Start New Game!</ThemedText>
+        style={styles.footerButton}
+        onPress={() => router.push('/screens/CreateGameScreen')}>
+        <ThemedText style={styles.footerButtonText}>Create your own</ThemedText>
       </TouchableOpacity>
     </ThemedView>
   );
@@ -20,8 +28,11 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#E91E63',
+  },
+  content: {
+    flex: 1,
+    padding: 20,
     paddingTop: Platform.OS === 'ios' ? 120 : 100,
     alignItems: 'center',
   },
@@ -50,5 +61,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     lineHeight: 32,
+  },
+  footerButton: {
+    width: '100%',
+    padding: 20,
+    backgroundColor: '#4A0D2D',
+    alignItems: 'center',
+  },
+  footerButtonText: {
+    fontSize: 24,
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
