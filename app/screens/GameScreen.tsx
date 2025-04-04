@@ -163,6 +163,40 @@ export default function GameScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: spacing,
+    backgroundColor: '#F5F5F5',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: spacing,
+  },
+  card: {
+    width: itemWidth,
+    height: itemWidth,
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  scoreContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
   customImage: {
     width: '100%',
     height: '100%',

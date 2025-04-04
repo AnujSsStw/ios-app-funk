@@ -258,6 +258,31 @@ export default function CreateGameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: '#1F96FF',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  container: {
+    flex: 1,
     padding: spacing,
     backgroundColor: '#E91E63',
     justifyContent: 'center', 
