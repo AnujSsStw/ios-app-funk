@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Platform, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Platform, View, Linking } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -16,11 +16,18 @@ export default function HomeScreen() {
           <ThemedText style={styles.buttonText}>Start New Game!</ThemedText>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity 
-        style={styles.footerButton}
-        onPress={() => router.push('/screens/SelectCreateEditScreen')}>
-        <ThemedText style={styles.footerButtonText}>Create your own</ThemedText>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity 
+          style={styles.footerButton}
+          onPress={() => router.push('/screens/SelectCreateEditScreen')}>
+          <ThemedText style={styles.footerButtonText}>Create your own</ThemedText>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.footerButton, styles.helpButton]}
+          onPress={() => Linking.openURL('mailto:garrett@lauringson.com?subject=Help%20%7C%20Send%20Feedback%20TappyTalk')}>
+          <ThemedText style={styles.footerButtonText}>Help | Send Feedback</ThemedText>
+        </TouchableOpacity>
+      </View>
     </ThemedView>
   );
 }
@@ -72,5 +79,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'white',
     fontWeight: 'bold',
+  },
+  helpButton: {
+    backgroundColor: '#2D0619',
   },
 });
