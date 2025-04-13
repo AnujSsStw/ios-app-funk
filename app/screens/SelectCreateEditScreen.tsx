@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, Platform, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { ImagePackage, loadCustomThemes, imagePackages } from '@/constants/ImagePackages';
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  View,
+  Image,
+  ScrollView,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { Title } from "./HomeScreen";
+import { imagePackages } from "@/constants/ImagePackages";
+import { loadCustomThemes } from "@/constants/ImagePackages";
+import { ImagePackage } from "@/constants/ImagePackages";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function SelectCreateEditScreen() {
   const [customThemes, setCustomThemes] = useState<ImagePackage[]>([]);
@@ -12,37 +23,79 @@ export default function SelectCreateEditScreen() {
   useEffect(() => {
     const loadThemes = async () => {
       await loadCustomThemes();
-      const themes = imagePackages.filter(pack => pack.items.some(item => item.isCustom));
+      const themes = imagePackages.filter((pack) =>
+        pack.items.some((item) => item.isCustom)
+      );
       setCustomThemes(themes);
     };
     loadThemes();
   }, []);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ThemedView style={styles.container}>
-        <TouchableOpacity 
-          style={[styles.button, styles.createButton]}
-          onPress={() => router.push('/screens/CreateGameScreen')}>
-          <ThemedText style={styles.buttonText}>New game</ThemedText>
+    <SafeAreaView
+      style={{
+        backgroundColor: "#4A2B82",
+        flex: 1,
+      }}
+    >
+      <ThemedView style={[styles.container, { paddingHorizontal: 20 }]}>
+        <Title />
+        <TouchableOpacity
+          style={[styles.button, styles.createButton, { marginTop: 20 }]}
+          onPress={() =>
+            router.push({
+              pathname: "/screens/CreateGameScreen",
+            })
+          }
+        >
+          <ThemedText type="title" style={styles.buttonText}>
+            New game
+          </ThemedText>
         </TouchableOpacity>
 
-        <ThemedText style={styles.sectionTitle}>Edit</ThemedText>
+        <ThemedText
+          type="title"
+          style={[styles.sectionTitle, { marginTop: 20, textAlign: "center" }]}
+        >
+          Edit
+        </ThemedText>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {customThemes.length > 0 ? (
             customThemes.map((theme, index) => (
-              <TouchableOpacity 
+              <TouchableOpacity
                 key={index}
-                style={[styles.button, styles.editButton]}
-                onPress={() => router.push({
-                  pathname: '/screens/CreateGameScreen',
-                  params: { editTheme: theme.theme }
-                })}>
-                <ThemedText style={styles.buttonText}>{theme.theme}</ThemedText>
+                onPress={() =>
+                  router.push({
+                    pathname: "/screens/CustomGameScreen",
+                    params: {
+                      editTheme: theme.theme,
+                      data: JSON.stringify(theme.items),
+                    },
+                  })
+                }
+              >
+                <LinearGradient
+                  colors={["#4FB3BE", "#9C27B0", "#7B1FA2", "#E91E63"]}
+                  style={[styles.button, styles.editButton]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                >
+                  <ThemedText
+                    type="title"
+                    style={[styles.buttonText, { textAlign: "center" }]}
+                  >
+                    {theme.theme}
+                  </ThemedText>
+                </LinearGradient>
               </TouchableOpacity>
             ))
           ) : (
-            <ThemedText style={styles.noThemesText}>Create a new game first.</ThemedText>
+            <ThemedText
+              type="title"
+              style={[styles.noThemesText, { textAlign: "center" }]}
+            >
+              Create a new game first.
+            </ThemedText>
           )}
         </ScrollView>
       </ThemedView>
@@ -51,57 +104,95 @@ export default function SelectCreateEditScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#E91E63',
-  },
   container: {
     flex: 1,
+    backgroundColor: "#4A2B82",
+  },
+  header: {
     padding: 20,
-    paddingTop: 40, // Added top padding for safety
-    backgroundColor: '#E91E63',
+    paddingTop: 40,
+    backgroundColor: "#4FB3BE",
+    borderRadius: 15,
+    margin: 20,
+    position: "relative",
   },
-  scrollContent: {
-    alignItems: 'center',
-    paddingVertical: 10,
+  logo: {
+    fontSize: 32,
+    color: "white",
+    fontWeight: "bold",
   },
-  button: {
-    width: '80%',
+  subtitle: {
+    fontSize: 16,
+    color: "white",
+    marginTop: 5,
+  },
+  monkeyIcon: {
+    width: 60,
+    height: 60,
+    position: "absolute",
+    right: 20,
+    top: 20,
+    borderRadius: 30,
+    backgroundColor: "#E91E63",
+  },
+  content: {
+    padding: 20,
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 24,
+    color: "white",
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 15,
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  nextButton: {
+    width: "100%",
+    backgroundColor: "#4FB3BE",
     padding: 15,
     borderRadius: 10,
-    marginVertical: 10,
-    borderWidth: 3,
-    borderColor: 'black',
-    alignSelf: 'center',
+    alignItems: "center",
+  },
+  nextButtonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  button: {
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 10,
   },
   createButton: {
-    backgroundColor: '#9C27B0',
+    backgroundColor: "#4FB3BE",
   },
   editButton: {
-    backgroundColor: '#4A0D2D',
+    backgroundColor: "#E91E63",
   },
   buttonText: {
-    fontSize: 28,
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    paddingVertical: 5,
-    lineHeight: 32,
+    color: "white",
+    // fontSize: 20,
+    // fontWeight: "bold",
   },
   sectionTitle: {
-    fontSize: 32,
-    color: 'black',
-    fontWeight: 'bold',
-    marginTop: 30,
+    // fontSize: 24,
+    // // color: "white",
+    // // fontWeight: "bold",
     marginBottom: 20,
-    paddingHorizontal: 20,
-    paddingTop: 20, // Added padding top to prevent cutoff
-
+  },
+  scrollContent: {
+    padding: 20,
   },
   noThemesText: {
-    fontSize: 18,
-    color: 'black',
-    textAlign: 'center',
-    paddingHorizontal: 20,
+    // fontWeight: "bold",
+    textAlign: "center",
   },
 });

@@ -21,7 +21,7 @@ export default function HomeScreen() {
           style={styles.button}
           onPress={() => router.push("/screens/ThemeSelectScreen")}
         >
-          <ThemedText style={styles.buttonText}>
+          <ThemedText type="title" style={styles.buttonText}>
             START{"\n"}NEW{"\n"}GAME!
           </ThemedText>
         </TouchableOpacity>
@@ -31,7 +31,7 @@ export default function HomeScreen() {
           style={styles.footerButton}
           onPress={() => router.push("/screens/SelectCreateEditScreen")}
         >
-          <ThemedText style={styles.footerButtonText}>
+          <ThemedText type="title" style={styles.footerButtonText}>
             CREATE YOUR OWN
           </ThemedText>
         </TouchableOpacity>
@@ -44,11 +44,11 @@ export default function HomeScreen() {
           }
         >
           <View style={styles.helpButtonContent}>
-            <ThemedText style={styles.footerButtonText}>
+            <ThemedText type="title" style={styles.footerButtonText}>
               HELP | SEND FEEDBACK
             </ThemedText>
             <View style={styles.iconContainer}>
-              <AntDesign name="questioncircleo" size={50} color="#E91E63" />
+              <AntDesign name="questioncircle" size={60} color="#E91E63" />
             </View>
           </View>
         </TouchableOpacity>
@@ -68,7 +68,7 @@ export const Title = () => {
       </ThemedText>
       <View style={styles.titleIconContainer}>
         <Image
-          source={require("../../assets/images/adaptive-icon.png")}
+          source={require("../../assets/bg-rm.png")}
           style={styles.titleIcon}
         />
       </View>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   titleIconContainer: {
     position: "absolute",
     bottom: -30,
-    right: -30,
+    right: -10,
     width: 100,
     height: 100,
     zIndex: 10,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     lineHeight: 56,
-    transform: [{ rotate: "-20deg" }],
+    transform: [{ rotate: "-30deg" }],
   },
   footer: {
     width: "100%",
@@ -171,6 +171,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     position: "absolute",
     right: -25,
-    top: -14,
+    top: -18,
   },
 });

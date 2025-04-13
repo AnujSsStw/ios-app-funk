@@ -45,6 +45,7 @@ export default function RootLayout() {
         >
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="screens/HomeScreen" />
+          <Stack.Screen name="info" />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>

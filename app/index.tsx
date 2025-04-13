@@ -8,6 +8,7 @@ import { Text } from "@gluestack-ui/themed";
 import Entypo from "@expo/vector-icons/Entypo";
 import { ThemedText } from "@/components/ThemedText";
 import { Image } from "expo-image";
+import { useFonts } from "expo-font";
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
@@ -19,6 +20,9 @@ SplashScreen.setOptions({
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  const [loaded, error] = useFonts({
+    Wedge: require("../assets/fonts/Wedges.ttf"),
+  });
 
   useEffect(() => {
     async function prepare() {
@@ -30,12 +34,14 @@ export default function App() {
         console.warn(e);
       } finally {
         // Tell the application to render
-        setAppIsReady(true);
+        if (loaded) {
+          setAppIsReady(true);
+        }
       }
     }
 
     prepare();
-  }, []);
+  }, [loaded, error]);
 
   const onLayoutRootView = useCallback(() => {
     if (appIsReady) {

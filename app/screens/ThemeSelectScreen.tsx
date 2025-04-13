@@ -1,20 +1,24 @@
-import React from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Platform,
-  View,
-  Image,
-} from "react-native";
-import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { ImagePackage, imagePackages } from "@/constants/ImagePackages";
-import { Title } from "./HomeScreen";
+import { imagePackages, loadCustomThemes } from "@/constants/ImagePackages";
 import { LinearGradient } from "expo-linear-gradient";
+import { router, useNavigation } from "expo-router";
+import React, { useEffect } from "react";
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { Title } from "./HomeScreen";
 
 export default function ThemeSelectScreen() {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    loadCustomThemes();
+  }, [navigation]);
+
   return (
     <ThemedView style={styles.container}>
       <Title />
@@ -23,27 +27,26 @@ export default function ThemeSelectScreen() {
       </ThemedText>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {imagePackages.map((imagePackage, index) => (
-          <LinearGradient
-            // style={styles.button}
-            colors={["#40BFB8", "#6A5ACD", "#E91E63", "#D81B60"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
+          <TouchableOpacity
+            onPress={() =>
+              router.push({
+                pathname: "/screens/GameScreen",
+                params: { packageIndex: index },
+              })
+            }
             key={index}
-            style={[styles.button]}
           >
-            <TouchableOpacity
-              onPress={() =>
-                router.push({
-                  pathname: "/screens/GameScreen",
-                  params: { packageIndex: index },
-                })
-              }
+            <LinearGradient
+              colors={["#40BFB8", "#6A5ACD", "#E91E63", "#D81B60"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={[styles.button]}
             >
               <ThemedText type="title" style={styles.buttonText}>
                 {imagePackage.theme}
               </ThemedText>
-            </TouchableOpacity>
-          </LinearGradient>
+            </LinearGradient>
+          </TouchableOpacity>
         ))}
 
         <TouchableOpacity
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
   },
   scrollContent: {
-    alignItems: "center",
+    // alignItems: "center",
     paddingVertical: 10,
   },
   button: {
