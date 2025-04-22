@@ -202,7 +202,7 @@ export default function GameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4A2E85", // Purple background
+    backgroundColor: "#5f286e", // Purple background
     padding: 0,
     paddingTop: Platform.OS === "ios" ? 60 : 40,
   },

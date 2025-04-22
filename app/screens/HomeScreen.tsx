@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -6,52 +6,87 @@ import {
   View,
   Linking,
   Image,
+  ImageBackground,
 } from "react-native";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
-
+import { loadCustomThemes } from "@/constants/ImagePackages";
 export default function HomeScreen() {
+  useEffect(() => {
+    loadCustomThemes();
+  }, []);
+
   return (
     <ThemedView style={styles.container}>
       <View style={styles.content}>
         <Title />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => router.push("/screens/ThemeSelectScreen")}
+        <ImageBackground
+          imageStyle={{
+            width: "100%",
+            height: "100%",
+            borderRadius: 15,
+          }}
+          source={require("../../assets/background.png")}
         >
-          <ThemedText type="title" style={styles.buttonText}>
-            START{"\n"}NEW{"\n"}GAME!
-          </ThemedText>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push("/screens/ThemeSelectScreen")}
+          >
+            <ThemedText type="title" style={styles.buttonText}>
+              START{"\n"}NEW{"\n"}GAME!
+            </ThemedText>
+            <MaterialIcons
+              name="keyboard-arrow-right"
+              size={80}
+              color="#EE4C9F"
+              style={styles.arrowIcon}
+            />
+          </TouchableOpacity>
+        </ImageBackground>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.footerButton}
-          onPress={() => router.push("/screens/SelectCreateEditScreen")}
+        <ImageBackground
+          source={require("../../assets/background.png")}
+          imageStyle={{
+            borderRadius: 15,
+          }}
         >
-          <ThemedText type="title" style={styles.footerButtonText}>
-            CREATE YOUR OWN
-          </ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.footerButton, styles.helpButton]}
-          onPress={() =>
-            Linking.openURL(
-              "mailto:garrett@lauringson.com?subject=Help%20%7C%20Send%20Feedback%20TappyTalk"
-            )
-          }
-        >
-          <View style={styles.helpButtonContent}>
+          <TouchableOpacity
+            style={styles.footerButton}
+            onPress={() => router.push("/screens/SelectCreateEditScreen")}
+          >
             <ThemedText type="title" style={styles.footerButtonText}>
-              HELP | SEND FEEDBACK
+              CREATE YOUR OWN
             </ThemedText>
-            <View style={styles.iconContainer}>
-              <AntDesign name="questioncircle" size={60} color="#E91E63" />
+          </TouchableOpacity>
+        </ImageBackground>
+        <ImageBackground
+          source={require("../../assets/background.png")}
+          imageStyle={{
+            borderRadius: 15,
+          }}
+        >
+          <TouchableOpacity
+            style={[styles.footerButton, styles.helpButton]}
+            onPress={() =>
+              Linking.openURL(
+                "mailto:garrett@lauringson.com?subject=Help%20%7C%20Send%20Feedback%20TappyTalk"
+              )
+            }
+          >
+            <View style={styles.helpButtonContent}>
+              <ThemedText type="title" style={styles.footerButtonText}>
+                HELP | SEND FEEDBACK
+              </ThemedText>
+              <View style={styles.iconContainer}>
+                <AntDesign name="questioncircle" size={60} color="#ba3980" />
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </ImageBackground>
       </View>
     </ThemedView>
   );
@@ -59,27 +94,42 @@ export default function HomeScreen() {
 
 export const Title = () => {
   return (
-    <View style={styles.titleContainer}>
-      <ThemedText type="title" style={styles.mainTitle}>
-        TAPPYTALK
-      </ThemedText>
-      <ThemedText style={styles.subtitle}>
-        The language-learning game you create.
-      </ThemedText>
-      <View style={styles.titleIconContainer}>
-        <Image
-          source={require("../../assets/bg-rm.png")}
-          style={styles.titleIcon}
-        />
+    <ImageBackground
+      source={require("../../assets/background.png")}
+      style={styles.titleContainer}
+      resizeMode="cover"
+      imageStyle={{
+        borderRadius: 15,
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <View
+        style={{
+          padding: 20,
+        }}
+      >
+        <ThemedText type="title" style={styles.mainTitle}>
+          TAPPYTALK
+        </ThemedText>
+        <ThemedText type="defaultSemiBold" style={styles.subtitle}>
+          The language-learning{"\n"}game you create.
+        </ThemedText>
+        <View style={styles.titleIconContainer}>
+          <Image
+            source={require("../../assets/main_logo.png")}
+            style={styles.titleIcon}
+          />
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4A0D66",
+    backgroundColor: "#5f286e",
   },
   content: {
     flex: 1,
@@ -88,9 +138,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   titleContainer: {
-    backgroundColor: "#40BFB8",
     width: "100%",
-    padding: 20,
+    padding: 0,
     marginTop: 10,
     borderRadius: 15,
     marginBottom: 20,
@@ -111,10 +160,10 @@ const styles = StyleSheet.create({
   },
   titleIconContainer: {
     position: "absolute",
-    bottom: -30,
+    bottom: -70,
     right: -10,
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     zIndex: 10,
   },
   titleIcon: {
@@ -127,7 +176,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     padding: 20,
     borderRadius: 15,
-    backgroundColor: "#40BFB8",
+    // backgroundColor: "#40BFB8",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
@@ -143,12 +192,13 @@ const styles = StyleSheet.create({
   footer: {
     width: "100%",
     padding: 20,
+    marginBottom: 20,
     gap: 10,
   },
   footerButton: {
     width: "100%",
     padding: 15,
-    backgroundColor: "#40BFB8",
+    // backgroundColor: "#40BFB8",
     alignItems: "center",
     borderRadius: 10,
   },
@@ -158,7 +208,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   helpButton: {
-    backgroundColor: "#40BFB8",
+    // backgroundColor: "#40BFB8",
     position: "relative",
     overflow: "visible",
   },
@@ -171,6 +221,12 @@ const styles = StyleSheet.create({
   iconContainer: {
     position: "absolute",
     right: -25,
-    top: -18,
+    top: -15,
+  },
+  arrowIcon: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    // transform: [{ rotate: "-30deg" }],
   },
 });

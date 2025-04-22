@@ -65,6 +65,8 @@ export const saveCustomTheme = async (
 
     if (isUpdate) {
       // Update existing theme
+      console.log("updating");
+
       customThemes = customThemes.map((t: ImagePackage) =>
         t.theme === theme.theme ? theme : t
       );

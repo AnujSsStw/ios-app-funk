@@ -6,6 +6,7 @@ import {
   View,
   Image,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -34,24 +35,36 @@ export default function SelectCreateEditScreen() {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: "#4A2B82",
+        backgroundColor: "#5f286e",
         flex: 1,
       }}
     >
       <ThemedView style={[styles.container, { paddingHorizontal: 20 }]}>
         <Title />
-        <TouchableOpacity
-          style={[styles.button, styles.createButton, { marginTop: 20 }]}
-          onPress={() =>
-            router.push({
-              pathname: "/screens/CreateGameScreen",
-            })
-          }
+        <ImageBackground
+          source={require("../../assets/background.png")}
+          imageStyle={{
+            borderRadius: 15,
+            width: "100%",
+            height: "100%",
+          }}
+          style={{
+            marginTop: 70,
+          }}
         >
-          <ThemedText type="title" style={styles.buttonText}>
-            New game
-          </ThemedText>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { marginTop: 20 }]}
+            onPress={() =>
+              router.push({
+                pathname: "/screens/CreateGameScreen",
+              })
+            }
+          >
+            <ThemedText type="title" style={styles.buttonText}>
+              New game
+            </ThemedText>
+          </TouchableOpacity>
+        </ImageBackground>
 
         <ThemedText
           type="title"
@@ -59,7 +72,10 @@ export default function SelectCreateEditScreen() {
         >
           Edit
         </ThemedText>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
           {customThemes.length > 0 ? (
             customThemes.map((theme, index) => (
               <TouchableOpacity
@@ -91,7 +107,7 @@ export default function SelectCreateEditScreen() {
             ))
           ) : (
             <ThemedText
-              type="title"
+              type="subtitle"
               style={[styles.noThemesText, { textAlign: "center" }]}
             >
               Create a new game first.
@@ -106,7 +122,7 @@ export default function SelectCreateEditScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4A2B82",
+    backgroundColor: "#5f286e",
   },
   header: {
     padding: 20,
@@ -171,28 +187,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  createButton: {
-    backgroundColor: "#4FB3BE",
-  },
   editButton: {
     backgroundColor: "#E91E63",
   },
   buttonText: {
     color: "white",
-    // fontSize: 20,
-    // fontWeight: "bold",
   },
   sectionTitle: {
-    // fontSize: 24,
-    // // color: "white",
-    // // fontWeight: "bold",
     marginBottom: 20,
   },
   scrollContent: {
     padding: 20,
   },
   noThemesText: {
-    // fontWeight: "bold",
     textAlign: "center",
   },
 });

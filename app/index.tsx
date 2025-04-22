@@ -29,7 +29,7 @@ export default function App() {
       try {
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Remove this if you copy and paste the code!
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
       } catch (e) {
         console.warn(e);
       } finally {

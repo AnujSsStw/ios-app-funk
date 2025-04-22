@@ -25,7 +25,10 @@ export default function ThemeSelectScreen() {
       <ThemedText type="title" style={styles.pickTitle}>
         PICK YOUR GAME
       </ThemedText>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
         {imagePackages.map((imagePackage, index) => (
           <TouchableOpacity
             onPress={() =>
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#4A0D66",
+    backgroundColor: "#5f286e",
     paddingTop: Platform.OS === "ios" ? 60 : 40,
   },
   titleContainer: {
@@ -104,11 +107,8 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   pickTitle: {
-    // fontSize: 32,
     textAlign: "center",
-    // color: "white",
-    // marginBottom: 30,
-    // fontWeight: "bold",
+    marginTop: 70,
   },
   scrollContent: {
     // alignItems: "center",

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
+  ImageBackground,
 } from "react-native";
 import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
@@ -32,7 +33,9 @@ export default function CreateGameScreen() {
       <ThemedView style={styles.container}>
         <Title />
         <View style={styles.content}>
-          <ThemedText style={styles.inputLabel}>NAME YOUR GAME</ThemedText>
+          <ThemedText type="title" style={styles.inputLabel}>
+            NAME YOUR GAME
+          </ThemedText>
           <TextInput
             style={styles.input}
             value={theme}
@@ -40,9 +43,22 @@ export default function CreateGameScreen() {
             placeholder="Ex. Farm Animals"
             placeholderTextColor="#999"
           />
-          <TouchableOpacity style={styles.button} onPress={handleNext}>
-            <ThemedText style={styles.buttonText}>NEXT</ThemedText>
-          </TouchableOpacity>
+
+          <ImageBackground
+            source={require("../../assets/background.png")}
+            imageStyle={{
+              borderRadius: 15,
+            }}
+            style={{
+              marginTop: 20,
+            }}
+          >
+            <TouchableOpacity style={styles.button} onPress={handleNext}>
+              <ThemedText type="title" style={styles.buttonText}>
+                NEXT
+              </ThemedText>
+            </TouchableOpacity>
+          </ImageBackground>
         </View>
       </ThemedView>
     </SafeAreaView>
@@ -52,7 +68,7 @@ export default function CreateGameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4A2B82", // Deep purple background
+    backgroundColor: "#5f286e", // Deep purple background
     padding: 20,
   },
   header: {
@@ -75,36 +91,29 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginTop: 40,
+    marginTop: 70,
+    paddingHorizontal: 20,
   },
   inputLabel: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#FFFFFF",
     textAlign: "center",
     marginBottom: 20,
   },
   input: {
     backgroundColor: "#FFFFFF",
     width: "100%",
-    height: 50,
-    borderRadius: 8,
-    paddingHorizontal: 15,
+    height: 60,
+    borderRadius: 15,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
     fontSize: 16,
     color: "#333",
   },
   button: {
-    backgroundColor: "#45D0C1", // Turquoise button
-    width: "100%",
-    height: 50,
-    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
+    height: 70,
   },
   buttonText: {
     color: "#FFFFFF",
-    fontSize: 18,
-    fontWeight: "bold",
   },
 });

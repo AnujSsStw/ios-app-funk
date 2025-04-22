@@ -128,7 +128,7 @@ export default function Info() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4A2B82",
+    backgroundColor: "#5f2865f286ee",
   },
   scrollView: {
     flex: 1,
