@@ -35,9 +35,11 @@ export default function HomeScreen() {
             style={styles.button}
             onPress={() => router.push("/screens/ThemeSelectScreen")}
           >
-            <ThemedText type="title" style={styles.buttonText}>
-              START{"\n"}NEW{"\n"}GAME!
-            </ThemedText>
+            <View style={styles.buttonText}>
+              <ThemedText style={{ fontSize: 48 }} type="title">
+                START{"\n"}NEW{"\n"}GAME!
+              </ThemedText>
+            </View>
             <MaterialIcons
               name="keyboard-arrow-right"
               size={80}
@@ -82,7 +84,10 @@ export default function HomeScreen() {
                 HELP | SEND FEEDBACK
               </ThemedText>
               <View style={styles.iconContainer}>
-                <AntDesign name="questioncircle" size={60} color="#ba3980" />
+                <Image
+                  source={require("../../assets/question.png")}
+                  style={{ width: 70, height: 70 }}
+                />
               </View>
             </View>
           </TouchableOpacity>
@@ -182,11 +187,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonText: {
-    fontSize: 48,
-    color: "white",
-    textAlign: "center",
-    fontWeight: "bold",
-    lineHeight: 56,
     transform: [{ rotate: "-30deg" }],
   },
   footer: {
@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
   footerButton: {
     width: "100%",
     padding: 15,
-    // backgroundColor: "#40BFB8",
     alignItems: "center",
     borderRadius: 10,
   },
@@ -221,7 +220,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     position: "absolute",
     right: -25,
-    top: -15,
+    top: -19,
   },
   arrowIcon: {
     position: "absolute",
