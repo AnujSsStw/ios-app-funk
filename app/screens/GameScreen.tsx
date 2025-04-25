@@ -95,10 +95,20 @@ export default function GameScreen() {
     if (showWinScreen) {
       const timer = setTimeout(() => {
         router.replace("/screens/HomeScreen");
-      }, 2000);
+      }, 5000);
+
       return () => clearTimeout(timer);
     }
   }, [showWinScreen]);
+  const fadeIn = () => {
+    setShowWinScreen(true);
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 5000,
+      useNativeDriver: true,
+    }).start();
+  };
 
   const handlePress = (index: number) => {
     if (correctAnswers.includes(index)) return;
@@ -110,7 +120,7 @@ export default function GameScreen() {
       setCorrectAnswers(newCorrectAnswers);
 
       if (newCorrectAnswers.length === items.length) {
-        setShowWinScreen(true);
+        fadeIn();
         return;
       }
 
