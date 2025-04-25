@@ -17,6 +17,7 @@ import { imagePackages } from "@/constants/ImagePackages";
 import { loadCustomThemes } from "@/constants/ImagePackages";
 import { ImagePackage } from "@/constants/ImagePackages";
 import { LinearGradient } from "expo-linear-gradient";
+import { PressableBackButton } from "./ImagePickerScreen";
 
 export default function SelectCreateEditScreen() {
   const [customThemes, setCustomThemes] = useState<ImagePackage[]>([]);
@@ -40,6 +41,7 @@ export default function SelectCreateEditScreen() {
       }}
     >
       <ThemedView style={[styles.container, { paddingHorizontal: 20 }]}>
+        <PressableBackButton />
         <Title />
         <ImageBackground
           source={require("../../assets/background.png")}

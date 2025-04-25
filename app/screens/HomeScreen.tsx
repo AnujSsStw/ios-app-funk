@@ -85,7 +85,7 @@ export default function HomeScreen() {
               </ThemedText>
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../assets/question.png")}
+                  source={require("../../assets/question-removebg-preview.png")}
                   style={{ width: 70, height: 70 }}
                 />
               </View>

@@ -124,13 +124,7 @@ export default function ImagePickerScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <BackButton size={40} color="#d45d93" />
-          <ThemedText style={styles.backButtonText}>Back</ThemedText>
-        </TouchableOpacity>
+        <PressableBackButton />
 
         <TouchableOpacity style={styles.imageContainer} onPress={pickImage}>
           {selectedImage ? (
@@ -280,6 +274,14 @@ const BackButton = ({
   );
 };
 
+export const PressableBackButton = () => {
+  return (
+    <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+      <BackButton size={40} color="#d45d93" />
+      <ThemedText style={styles.backButtonText}>Back</ThemedText>
+    </TouchableOpacity>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
